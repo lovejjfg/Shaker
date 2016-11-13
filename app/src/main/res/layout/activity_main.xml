@@ -6,9 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.tt.fragments.MainActivity">
+    tools:context="com.lovejjfg.fragments.MainActivity">
+
+
 
     <FrameLayout
+        android:visibility="visible"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,43 +29,11 @@
 
     </FrameLayout>
 
-    <RadioGroup
-        android:visibility="gone"
-        android:id="@+id/rg_container"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<fragment-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:name="com.lovejjfg.fragments.Fragment9"-->
+        <!--tools:layout="@layout/fragment_5">-->
 
-        <RadioButton
-            android:id="@+id/tab1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:checked="true"
-            android:text="1"
-            android:textColor="@color/check_color"
-            />
-
-        <RadioButton
-            android:id="@+id/tab2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:drawableTop="@drawable/check_selectot"
-            android:textColor="@color/check_color"
-            />
-
-        <RadioButton
-            android:id="@+id/tab3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/check_color"
-            android:text=""
-            />
-    </RadioGroup>
-
+    <!--</fragment>-->
 </LinearLayout>
