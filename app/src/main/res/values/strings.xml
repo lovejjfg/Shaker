@@ -13,6 +13,7 @@
     <string name="share">分享</string>
     <string name="jump">跳转下一个</string>
     <string name="pre">返回上一个</string>
+    <string name="home">回到首页</string>
     <string-array name="names">
         <item>"唉哟"</item>
         <item>"不要"</item>

@@ -11,7 +11,8 @@
 
     <TextView
         android:id="@+id/text"
-        android:text="@string/this_1"
+        android:translationY="-60dp"
+        android:text="@string/this_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -19,12 +20,7 @@
         android:id="@+id/bt_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/jump"/>
+        android:text="@string/home"/>
 
-    <Button
-        android:id="@+id/bt_pre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pre"/>
 
 </LinearLayout>

@@ -11,7 +11,8 @@
 
     <TextView
         android:id="@+id/text"
-        android:text="@string/this_1"
+        android:text="@string/this_2"
+        android:translationY="-30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

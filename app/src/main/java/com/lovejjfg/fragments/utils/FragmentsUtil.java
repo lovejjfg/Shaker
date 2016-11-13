@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.lovejjfg.fragments.base.BaseFragment;
 
 import static com.lovejjfg.fragments.base.BaseFragment.ARG_CONTAINER;
+import static com.lovejjfg.fragments.base.BaseFragment.STATE_SAVE_IS_HIDDEN;
 
 /**
  * Created by Joe on 2016/11/13.
@@ -24,10 +25,19 @@ public class FragmentsUtil {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
         String tag = to.getClass().getSimpleName();
+        transaction.add(from.getContainerId(), to, tag)
+                .addToBackStack(tag)
+                .hide(from)
+                .show(to)
+                .commit();
+
+    }
+    public void replaceToShow(BaseFragment from, BaseFragment to) {
+        bindContainerId(from.getContainerId(), to);
+        FragmentTransaction transaction = manager.beginTransaction();
+        String tag = to.getClass().getSimpleName();
         transaction.replace(from.getContainerId(), to, tag)
                 .addToBackStack(tag)
-//                .hide(from)
-//                .show(to)
                 .commit();
 
     }
@@ -52,4 +62,32 @@ public class FragmentsUtil {
         args.putInt(ARG_CONTAINER, containerId);
     }
 
+    public void initFragments(Bundle savedInstanceState, BaseFragment fragment) {
+        if (savedInstanceState == null) {
+            return;
+        }
+        boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
+
+        FragmentTransaction ft = manager.beginTransaction();
+        if (isSupportHidden) {
+            ft.hide(fragment);
+        } else {
+            ft.show(fragment);
+        }
+        ft.commit();
+    }
+
+    public void clearFragmentTo() {
+//        manager.popBackStack("",);
+    }
+
+    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+        int flag;
+        if (includeSelf) {
+            flag = FragmentManager.POP_BACK_STACK_INCLUSIVE;
+        } else {
+            flag = 0;
+        }
+        manager.popBackStackImmediate(target.getSimpleName(), flag);
+    }
 }

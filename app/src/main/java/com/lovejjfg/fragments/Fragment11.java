@@ -17,14 +17,14 @@ import butterknife.OnClick;
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment9 extends BaseFragment  {
+public class Fragment11 extends BaseFragment  {
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     public static final String TAG = "____TAG____";
 
-    public Fragment9() {
+    public Fragment11() {
     }
 
 
@@ -32,8 +32,8 @@ public class Fragment9 extends BaseFragment  {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Fragment9 newInstance() {
-        Fragment9 fragment = new Fragment9();
+    public static Fragment11 newInstance() {
+        Fragment11 fragment = new Fragment11();
         Bundle args = new Bundle();
         count++;
         args.putString(ARG_SECTION_NUMBER, "TAG" + count);
@@ -47,7 +47,7 @@ public class Fragment9 extends BaseFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_9, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_11, container, false);
         ButterKnife.bind(this, rootView);
 //        mText.setTranslationY(100 * count);
         return rootView;
@@ -57,7 +57,10 @@ public class Fragment9 extends BaseFragment  {
     @OnClick(R.id.bt_next)
     public void onClick(View v) {
         Log.e(TAG, "onClick: " + v.getId());
-        addToShow(this,Fragment10.newInstance());
+//        addToShow(this, Fragment11.newInstance());
+        popTo(Fragment10.class, true);
     }
+
+
 
 }

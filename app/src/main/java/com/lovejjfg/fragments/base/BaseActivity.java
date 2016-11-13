@@ -11,7 +11,7 @@ import com.lovejjfg.fragments.utils.FragmentsUtil;
  * Email lovejjfg@gmail.com
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements IFragment {
 
     public FragmentsUtil fragmentsUtil;
 
@@ -23,5 +23,20 @@ public class BaseActivity extends AppCompatActivity {
 
     public FragmentsUtil getFragmentsUtil() {
         return fragmentsUtil;
+    }
+
+    @Override
+    public void loadRoot(int containerViewId, BaseFragment root) {
+        fragmentsUtil.loadRoot(containerViewId, root);
+    }
+
+    @Override
+    public void addToShow(BaseFragment from, BaseFragment to) {
+        fragmentsUtil.addToShow(from, to);
+    }
+
+    @Override
+    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+        fragmentsUtil.popTo(target, includeSelf);
     }
 }

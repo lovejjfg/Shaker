@@ -4,11 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by Joe on 2016/10/13.
@@ -17,7 +18,7 @@ import android.view.ViewGroup;
 
 public class BaseFragment extends Fragment implements IFragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
+    public static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
     public static final String ARG_CONTAINER = "ARG_CONTAINER_ID";
     public static final String TAG = "TAG";
     public String tagName;
@@ -29,18 +30,10 @@ public class BaseFragment extends Fragment implements IFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.e(TAG, "onCreate: " + tagName);
         super.onCreate(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
-
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (isSupportHidden) {
-                ft.hide(this);
-            } else {
-                ft.show(this);
-            }
-            ft.commit();
+        if (activity != null) {
+            activity.getFragmentsUtil().initFragments(savedInstanceState, this);
         }
+
     }
 
     @Override
@@ -128,6 +121,12 @@ public class BaseFragment extends Fragment implements IFragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        Log.e(TAG, "onHiddenChanged: " + hidden + ";->" + tagName);
+        super.onHiddenChanged(hidden);
+    }
+
     public int getContainerId() {
         return getArguments().getInt(ARG_CONTAINER);
     }
@@ -136,14 +135,21 @@ public class BaseFragment extends Fragment implements IFragment {
     @Override
     public void loadRoot(int containerViewId, BaseFragment root) {
         if (activity != null) {
-            activity.getFragmentsUtil().loadRoot(containerViewId, root);
+            activity.loadRoot(containerViewId, root);
         }
     }
 
     @Override
     public void addToShow(BaseFragment from, BaseFragment to) {
         if (activity != null) {
-            activity.getFragmentsUtil().addToShow(from, to);
+            activity.addToShow(from, to);
+        }
+    }
+
+    @Override
+    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+        if (activity != null) {
+            activity.popTo(target, includeSelf);
         }
     }
 }
