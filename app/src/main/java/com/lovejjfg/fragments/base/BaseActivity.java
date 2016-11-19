@@ -1,5 +1,6 @@
 package com.lovejjfg.fragments.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,23 @@ public class BaseActivity extends AppCompatActivity implements IFragment {
     }
 
     @Override
+    public void initFragments(Bundle savedInstanceState, BaseFragment fragment) {
+        fragmentsUtil.initFragments(savedInstanceState, fragment);
+    }
+
+    @Nullable
+    @Override
+    public BaseFragment getTopFragment() {
+        return fragmentsUtil.getTopFragment();
+    }
+
+    @Nullable
+    @Override
+    public BaseFragment findFragment(String className) {
+        return fragmentsUtil.findFragment(className);
+    }
+
+    @Override
     public void loadRoot(int containerViewId, BaseFragment root) {
         fragmentsUtil.loadRoot(containerViewId, root);
     }
@@ -36,7 +54,35 @@ public class BaseActivity extends AppCompatActivity implements IFragment {
     }
 
     @Override
-    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
-        fragmentsUtil.popTo(target, includeSelf);
+    public boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+        return fragmentsUtil.popTo(target, includeSelf);
+    }
+
+    @Override
+    public void replaceToShow(BaseFragment from, BaseFragment to) {
+        fragmentsUtil.replaceToShow(from, to);
+    }
+
+    @Override
+    public boolean customerFinish() {
+        BaseFragment topFragment = getTopFragment();
+        if (topFragment == null || !topFragment.customerFinish()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                finishAfterTransition();
+            } else {
+                finish();
+            }
+            return true;
+        }
+        return true;
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        BaseFragment topFragment = getTopFragment();
+        if (topFragment == null || !topFragment.customerFinish()) {
+            super.onBackPressed();
+        }
     }
 }

@@ -63,5 +63,4 @@ public class Fragment8 extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         Log.e(TAG, "onClick: " + v.getId());
     }
-
 }

@@ -1,13 +1,18 @@
 package com.lovejjfg.fragments.utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lovejjfg.fragments.base.BaseFragment;
 
+import java.util.List;
+
 import static com.lovejjfg.fragments.base.BaseFragment.ARG_CONTAINER;
-import static com.lovejjfg.fragments.base.BaseFragment.STATE_SAVE_IS_HIDDEN;
+import static com.lovejjfg.fragments.base.BaseFragment.ARG_IS_HIDDEN;
 
 /**
  * Created by Joe on 2016/11/13.
@@ -15,7 +20,7 @@ import static com.lovejjfg.fragments.base.BaseFragment.STATE_SAVE_IS_HIDDEN;
  */
 
 public class FragmentsUtil {
-    FragmentManager manager;
+    private FragmentManager manager;
 
     public FragmentsUtil(FragmentManager manager) {
         this.manager = manager;
@@ -32,6 +37,7 @@ public class FragmentsUtil {
                 .commit();
 
     }
+
     public void replaceToShow(BaseFragment from, BaseFragment to) {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
@@ -66,7 +72,7 @@ public class FragmentsUtil {
         if (savedInstanceState == null) {
             return;
         }
-        boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
+        boolean isSupportHidden = savedInstanceState.getBoolean(ARG_IS_HIDDEN);
 
         FragmentTransaction ft = manager.beginTransaction();
         if (isSupportHidden) {
@@ -81,13 +87,35 @@ public class FragmentsUtil {
 //        manager.popBackStack("",);
     }
 
-    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+    public boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
         int flag;
         if (includeSelf) {
             flag = FragmentManager.POP_BACK_STACK_INCLUSIVE;
         } else {
             flag = 0;
         }
-        manager.popBackStackImmediate(target.getSimpleName(), flag);
+       return manager.popBackStackImmediate(target.getSimpleName(), flag);
+    }
+
+    @Nullable
+    public BaseFragment findFragment(@NonNull String className) {
+        Fragment tagFragment = manager.findFragmentByTag(className);
+        if (tagFragment instanceof BaseFragment) {
+            return (BaseFragment) tagFragment;
+        }
+        return null;
+    }
+
+    @Nullable
+    public BaseFragment getTopFragment() {
+        List<Fragment> fragments = manager.getFragments();
+        int size = fragments.size();
+        for (int i = size - 1; i >= 0; i--) {
+            Fragment f = fragments.get(i);
+            if (f instanceof BaseFragment) {
+                return (BaseFragment) f;
+            }
+        }
+        return null;
     }
 }

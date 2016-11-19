@@ -9,16 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
-
 /**
  * Created by Joe on 2016/10/13.
  * Email lovejjfg@gmail.com
  */
 
-public class BaseFragment extends Fragment implements IFragment {
+public abstract class BaseFragment extends Fragment implements IFragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
-    public static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
+    public static final String ARG_IS_HIDDEN = "ARG_IS_HIDDEN";
     public static final String ARG_CONTAINER = "ARG_CONTAINER_ID";
     public static final String TAG = "TAG";
     public String tagName;
@@ -30,15 +28,12 @@ public class BaseFragment extends Fragment implements IFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.e(TAG, "onCreate: " + tagName);
         super.onCreate(savedInstanceState);
-        if (activity != null) {
-            activity.getFragmentsUtil().initFragments(savedInstanceState, this);
-        }
-
+        initFragments(savedInstanceState, this);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());
+        outState.putBoolean(ARG_IS_HIDDEN, isHidden());
         super.onSaveInstanceState(outState);
 
     }
@@ -123,7 +118,7 @@ public class BaseFragment extends Fragment implements IFragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        Log.e(TAG, "onHiddenChanged: " + hidden + ";->" + tagName);
+        Log.e(TAG, "onHiddenChanged: " + tagName + (hidden ? "不可见了！" : "可见了！！"));
         super.onHiddenChanged(hidden);
     }
 
@@ -131,6 +126,31 @@ public class BaseFragment extends Fragment implements IFragment {
         return getArguments().getInt(ARG_CONTAINER);
     }
 
+
+    @Override
+    public void initFragments(Bundle savedInstanceState, BaseFragment fragment) {
+        if (activity != null) {
+            activity.initFragments(savedInstanceState, this);
+        }
+    }
+
+    @Nullable
+    @Override
+    public BaseFragment getTopFragment() {
+        if (activity != null) {
+            return activity.getTopFragment();
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public BaseFragment findFragment(String className) {
+        if (activity != null) {
+            return activity.findFragment(className);
+        }
+        return null;
+    }
 
     @Override
     public void loadRoot(int containerViewId, BaseFragment root) {
@@ -147,9 +167,19 @@ public class BaseFragment extends Fragment implements IFragment {
     }
 
     @Override
-    public void popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+    public boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+        return activity != null && activity.popTo(target, includeSelf);
+    }
+
+    @Override
+    public void replaceToShow(BaseFragment from, BaseFragment to) {
         if (activity != null) {
-            activity.popTo(target, includeSelf);
+            activity.replaceToShow(from, to);
         }
+    }
+
+    @Override
+    public boolean customerFinish() {
+        return false;
     }
 }

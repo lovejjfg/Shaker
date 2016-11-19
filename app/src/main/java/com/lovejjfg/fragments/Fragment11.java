@@ -36,7 +36,7 @@ public class Fragment11 extends BaseFragment  {
         Fragment11 fragment = new Fragment11();
         Bundle args = new Bundle();
         count++;
-        args.putString(ARG_SECTION_NUMBER, "TAG" + count);
+        args.putString(ARG_SECTION_NUMBER, "Fragment11");
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +61,9 @@ public class Fragment11 extends BaseFragment  {
         popTo(Fragment10.class, true);
     }
 
-
-
+    @Override
+    public boolean customerFinish() {
+        popTo(Fragment9.class, false);
+        return true;
+    }
 }

@@ -36,7 +36,7 @@ public class Fragment10 extends BaseFragment  {
         Fragment10 fragment = new Fragment10();
         Bundle args = new Bundle();
         count++;
-        args.putString(ARG_SECTION_NUMBER, "TAG" + count);
+        args.putString(ARG_SECTION_NUMBER, "Fragment10");
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,6 +1,7 @@
 package com.lovejjfg.fragments.base;
 
-import com.lovejjfg.fragments.Fragment9;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 /**
  * Created by Joe on 2016/11/13.
@@ -8,11 +9,22 @@ import com.lovejjfg.fragments.Fragment9;
  */
 
 public interface IFragment {
+    void initFragments(Bundle savedInstanceState, BaseFragment fragment);
+
+    @Nullable
+    BaseFragment getTopFragment();
+
+    @Nullable
+    BaseFragment findFragment(String className);
+
     void loadRoot(int containerViewId, BaseFragment root);
 
     void addToShow(BaseFragment from, BaseFragment to);
 
-    void popTo(Class<? extends BaseFragment> target, boolean includeSelf);
+    boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf);
 
+    void replaceToShow(BaseFragment from, BaseFragment to);
+
+    boolean customerFinish();
 
 }
