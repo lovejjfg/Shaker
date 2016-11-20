@@ -37,10 +37,10 @@ public class Fragment2 extends SupportFragment implements View.OnClickListener {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Fragment2 newInstance(int sectionNumber) {
+    public static Fragment2 newInstance() {
         Fragment2 fragment = new Fragment2();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putString(ARG_SECTION_NUMBER, "Fragment2");
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,9 +66,9 @@ public class Fragment2 extends SupportFragment implements View.OnClickListener {
         ButterKnife.bind(this, rootView);
         manager = getChildFragmentManager();
         if (savedInstanceState == null) {
-            f4 = new Fragment4();
-            f5 = new Fragment5();
-            f6 = new Fragment7();
+            f4 =  Fragment4.newInstance();
+            f5 =  Fragment5.newInstance();
+            f6 =  Fragment7.newInstance();
 
             manager.beginTransaction()
                     .add(R.id.child_container, f4, T4)

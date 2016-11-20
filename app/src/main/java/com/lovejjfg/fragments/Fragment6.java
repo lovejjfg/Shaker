@@ -29,10 +29,10 @@ public class Fragment6 extends SupportFragment implements View.OnClickListener {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Fragment6 newInstance(int sectionNumber) {
+    public static Fragment6 newInstance() {
         Fragment6 fragment = new Fragment6();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putString(ARG_SECTION_NUMBER, "Fragment6");
         fragment.setArguments(args);
         return fragment;
     }

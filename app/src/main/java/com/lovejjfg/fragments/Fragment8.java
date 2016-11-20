@@ -35,10 +35,10 @@ public class Fragment8 extends SupportFragment implements View.OnClickListener {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static Fragment8 newInstance(int sectionNumber) {
+    public static Fragment8 newInstance() {
         Fragment8 fragment = new Fragment8();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+        args.putString(ARG_SECTION_NUMBER, "Fragment8");
         fragment.setArguments(args);
         return fragment;
     }

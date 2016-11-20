@@ -53,7 +53,20 @@ public class FragmentsUtil {
         transaction.add(containerViewId, root, tag)
                 .addToBackStack(tag)
                 .commit();
+    }
 
+    public void loadRoots(int containerViewId, int showIndex, BaseFragment... root) {
+        for (int i = 0; i < root.length; i++) {
+            bindContainerId(containerViewId, root[i]);
+            FragmentTransaction transaction = manager.beginTransaction();
+            String tag = root[i].getClass().getSimpleName();
+            transaction.add(containerViewId, root[i], tag).hide(root[i]);
+            if (i == showIndex) {
+                transaction.show(root[i]);
+            }
+            transaction.addToBackStack(tag)
+                    .commit();
+        }
 
     }
 
