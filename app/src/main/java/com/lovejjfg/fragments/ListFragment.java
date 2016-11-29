@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 
 import com.lovejjfg.fragments.adapter.ListAdapter;
-import com.lovejjfg.fragments.base.BaseFragment;
 import com.lovejjfg.fragments.model.ModelBean;
 import com.lovejjfg.fragments.widget.CurveLayout;
 import com.lovejjfg.fragments.widget.HeaderRefreshLayout;
 import com.lovejjfg.fragments.widget.TouchCircleView;
+import com.lovejjfg.sview.SupportFragment;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Created by Joe on 2016/10/8.
  * Email lovejjfg@gmail.com
  */
-public class ListFragment extends BaseFragment implements  TouchCircleView.OnLoadingListener {
+public class ListFragment extends SupportFragment implements  TouchCircleView.OnLoadingListener {
     private static final String TAG = ListFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
     private ArrayList<ModelBean> list;

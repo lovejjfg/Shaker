@@ -11,18 +11,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.lovejjfg.fragments.base.BaseFragment;
+import com.lovejjfg.sview.SupportFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment2 extends BaseFragment implements View.OnClickListener {
+public class Fragment2 extends SupportFragment implements View.OnClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.

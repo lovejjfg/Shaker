@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.lovejjfg.fragments.base.BaseFragment;
+import com.lovejjfg.sview.SupportFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.OnClick;
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment10 extends BaseFragment  {
+public class Fragment10 extends SupportFragment {
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -35,7 +35,6 @@ public class Fragment10 extends BaseFragment  {
     public static Fragment10 newInstance() {
         Fragment10 fragment = new Fragment10();
         Bundle args = new Bundle();
-        count++;
         args.putString(ARG_SECTION_NUMBER, "Fragment10");
         fragment.setArguments(args);
         return fragment;

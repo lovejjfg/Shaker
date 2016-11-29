@@ -3,18 +3,16 @@ package com.lovejjfg.fragments;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.lovejjfg.fragments.base.BaseActivity;
-import com.lovejjfg.fragments.base.BaseFragment;
+
+import com.lovejjfg.sview.SupportActivity;
 
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends SupportActivity {
 
     private FragmentManager manager;
     private static final String T1 = "T1";
@@ -57,14 +55,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        BaseFragment.count--;
         //如果加入了回退栈，那么在返回的时候会先去退栈
         super.onBackPressed();
     }
 
     @Override
     protected void onDestroy() {
-        BaseFragment.count = 0;
         super.onDestroy();
     }
 

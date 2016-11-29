@@ -1,4 +1,4 @@
-package com.lovejjfg.fragments.base;
+package com.lovejjfg.sview;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,15 +14,14 @@ import android.view.ViewGroup;
  * Email lovejjfg@gmail.com
  */
 
-public abstract class BaseFragment extends Fragment implements IFragment {
+public abstract class SupportFragment extends Fragment implements ISupportFragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
     public static final String ARG_IS_HIDDEN = "ARG_IS_HIDDEN";
     public static final String ARG_CONTAINER = "ARG_CONTAINER_ID";
     public static final String TAG = "TAG";
     public String tagName;
-    public static int count;
     @Nullable
-    private BaseActivity activity;
+    private SupportActivity activity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +44,7 @@ public abstract class BaseFragment extends Fragment implements IFragment {
 
     @Override
     public void onAttach(Context context) {
-        activity = (BaseActivity) context;
+        activity = (SupportActivity) context;
         if (getArguments() != null) {
             tagName = getArguments().getString(ARG_SECTION_NUMBER);
         }
@@ -128,7 +127,7 @@ public abstract class BaseFragment extends Fragment implements IFragment {
 
 
     @Override
-    public void initFragments(Bundle savedInstanceState, BaseFragment fragment) {
+    public void initFragments(Bundle savedInstanceState, SupportFragment fragment) {
         if (activity != null) {
             activity.initFragments(savedInstanceState, this);
         }
@@ -136,7 +135,7 @@ public abstract class BaseFragment extends Fragment implements IFragment {
 
     @Nullable
     @Override
-    public BaseFragment getTopFragment() {
+    public SupportFragment getTopFragment() {
         if (activity != null) {
             return activity.getTopFragment();
         }
@@ -145,7 +144,7 @@ public abstract class BaseFragment extends Fragment implements IFragment {
 
     @Nullable
     @Override
-    public BaseFragment findFragment(String className) {
+    public SupportFragment findFragment(String className) {
         if (activity != null) {
             return activity.findFragment(className);
         }
@@ -153,33 +152,115 @@ public abstract class BaseFragment extends Fragment implements IFragment {
     }
 
     @Override
-    public void loadRoot(int containerViewId, BaseFragment root) {
+    public void loadRoot(int containerViewId, SupportFragment root) {
         if (activity != null) {
             activity.loadRoot(containerViewId, root);
         }
     }
 
     @Override
-    public void addToShow(BaseFragment from, BaseFragment to) {
+    public void addToShow(SupportFragment from, SupportFragment to) {
         if (activity != null) {
             activity.addToShow(from, to);
         }
     }
 
     @Override
-    public boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+    public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
         return activity != null && activity.popTo(target, includeSelf);
     }
 
     @Override
-    public void replaceToShow(BaseFragment from, BaseFragment to) {
+    public void replaceToShow(SupportFragment from, SupportFragment to) {
         if (activity != null) {
             activity.replaceToShow(from, to);
         }
     }
 
+
     @Override
-    public boolean customerFinish() {
-        return false;
+    public void showToast(String toast) {
+        if (activity != null) {
+            activity.showToast(toast);
+        }
+    }
+
+    @Override
+    public void showToast(int stringId) {
+        if (activity != null) {
+            activity.showToast(stringId);
+        }
+    }
+
+    @Override
+    public void showLoadingDialog(String msg) {
+        if (activity != null) {
+            activity.showLoadingDialog(msg);
+        }
+    }
+
+    @Override
+    public void closeLoadingDialog() {
+        if (activity != null) {
+            activity.closeLoadingDialog();
+        }
+    }
+
+    @Override
+    public void openKeyBoard() {
+        if (activity != null) {
+            activity.openKeyBoard();
+        }
+    }
+
+    @Override
+    public void openKeyBoard(View focusView) {
+        if (activity != null) {
+            activity.openKeyBoard(focusView);
+        }
+    }
+
+    @Override
+    public void closeKeyBoard() {
+        if (activity != null) {
+            activity.closeKeyBoard();
+        }
+    }
+
+
+    @Override
+    public  boolean finishSelf() {
+        return activity != null && activity.popSelf();
+    }
+
+
+    //    @Override
+//    public void saveToSharedPrefs(String key, Object value) {
+//        if (activity != null) {
+//            activity.saveToSharedPrefs(key, value);
+//        }
+//    }
+
+    @Override
+    public void saveViewData(Bundle bundle) {
+        Bundle arguments = getArguments();
+        if (arguments == null) {
+            setArguments(bundle);
+        } else {
+            arguments.putAll(bundle);
+        }
+    }
+
+    @Override
+    public void saveViewData(String key, Bundle bundle) {
+        Bundle arguments = getArguments();
+        if (arguments == null) {
+            Bundle b = new Bundle();
+            b.putBundle(key, bundle);
+            setArguments(b);
+        } else {
+            arguments.putBundle(key, bundle);
+            setArguments(arguments);
+        }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
-import com.lovejjfg.fragments.base.BaseFragment;
+import com.lovejjfg.sview.SupportFragment;
 
 import static android.content.ContentValues.TAG;
 
@@ -17,7 +17,7 @@ import static android.content.ContentValues.TAG;
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment4 extends BaseFragment implements View.OnClickListener {
+public class Fragment4 extends SupportFragment implements View.OnClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.

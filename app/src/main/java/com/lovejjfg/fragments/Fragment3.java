@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.lovejjfg.fragments.base.BaseFragment;
 import com.lovejjfg.fragments.widget.CurveLayout;
 import com.lovejjfg.fragments.widget.CurveView;
 import com.lovejjfg.fragments.widget.ScrollAbleViewPager;
+import com.lovejjfg.sview.SupportFragment;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment3 extends BaseFragment implements View.OnClickListener {
+public class Fragment3 extends SupportFragment implements View.OnClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.

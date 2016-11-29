@@ -1,4 +1,4 @@
-package com.ejurouter.baselibrary;
+package com.lovejjfg.sview;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.ejurouter.baselibrary.test", appContext.getPackageName());
+        assertEquals("com.lovejjfg.sview.test", appContext.getPackageName());
     }
 }

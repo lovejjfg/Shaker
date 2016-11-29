@@ -8,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.google.gson.Gson;
-import com.lovejjfg.fragments.base.BaseFragment;
 import com.lovejjfg.fragments.model.ModelBean;
 import com.lovejjfg.fragments.pagetransformer.ScalePageTransformer;
+import com.lovejjfg.sview.SupportFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by Joe on 2016-06-09
  * Email: lovejjfg@gmail.com
  */
-public class Fragment1 extends BaseFragment implements View.OnClickListener {
+public class Fragment1 extends SupportFragment implements View.OnClickListener {
     /**
      * The fragment argument representing the section number for this
      * fragment.

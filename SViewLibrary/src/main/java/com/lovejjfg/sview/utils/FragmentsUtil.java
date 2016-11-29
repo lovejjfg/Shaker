@@ -1,4 +1,4 @@
-package com.lovejjfg.fragments.utils;
+package com.lovejjfg.sview.utils;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,12 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import com.lovejjfg.fragments.base.BaseFragment;
+import com.lovejjfg.sview.SupportFragment;
 
 import java.util.List;
 
-import static com.lovejjfg.fragments.base.BaseFragment.ARG_CONTAINER;
-import static com.lovejjfg.fragments.base.BaseFragment.ARG_IS_HIDDEN;
 
 /**
  * Created by Joe on 2016/11/13.
@@ -26,7 +24,7 @@ public class FragmentsUtil {
         this.manager = manager;
     }
 
-    public void addToShow(BaseFragment from, BaseFragment to) {
+    public void addToShow(SupportFragment from, SupportFragment to) {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
         String tag = to.getClass().getSimpleName();
@@ -38,7 +36,7 @@ public class FragmentsUtil {
 
     }
 
-    public void replaceToShow(BaseFragment from, BaseFragment to) {
+    public void replaceToShow(SupportFragment from, SupportFragment to) {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
         String tag = to.getClass().getSimpleName();
@@ -48,7 +46,7 @@ public class FragmentsUtil {
 
     }
 
-    public void loadRoot(int containerViewId, BaseFragment root) {
+    public void loadRoot(int containerViewId, SupportFragment root) {
         bindContainerId(containerViewId, root);
         FragmentTransaction transaction = manager.beginTransaction();
         String tag = root.getClass().getSimpleName();
@@ -59,20 +57,20 @@ public class FragmentsUtil {
 
     }
 
-    private void bindContainerId(int containerId, BaseFragment to) {
+    private void bindContainerId(int containerId, SupportFragment to) {
         Bundle args = to.getArguments();
         if (args == null) {
             args = new Bundle();
             to.setArguments(args);
         }
-        args.putInt(ARG_CONTAINER, containerId);
+        args.putInt(SupportFragment.ARG_CONTAINER, containerId);
     }
 
-    public void initFragments(Bundle savedInstanceState, BaseFragment fragment) {
+    public void initFragments(Bundle savedInstanceState, SupportFragment fragment) {
         if (savedInstanceState == null) {
             return;
         }
-        boolean isSupportHidden = savedInstanceState.getBoolean(ARG_IS_HIDDEN);
+        boolean isSupportHidden = savedInstanceState.getBoolean(SupportFragment.ARG_IS_HIDDEN);
 
         FragmentTransaction ft = manager.beginTransaction();
         if (isSupportHidden) {
@@ -87,33 +85,37 @@ public class FragmentsUtil {
 //        manager.popBackStack("",);
     }
 
-    public boolean popTo(Class<? extends BaseFragment> target, boolean includeSelf) {
+    public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
         int flag;
         if (includeSelf) {
             flag = FragmentManager.POP_BACK_STACK_INCLUSIVE;
         } else {
             flag = 0;
         }
-       return manager.popBackStackImmediate(target.getSimpleName(), flag);
+        return manager.popBackStackImmediate(target.getSimpleName(), flag);
+    }
+
+    public boolean popSelf() {
+        return manager.popBackStackImmediate();
     }
 
     @Nullable
-    public BaseFragment findFragment(@NonNull String className) {
+    public SupportFragment findFragment(@NonNull String className) {
         Fragment tagFragment = manager.findFragmentByTag(className);
-        if (tagFragment instanceof BaseFragment) {
-            return (BaseFragment) tagFragment;
+        if (tagFragment instanceof SupportFragment) {
+            return (SupportFragment) tagFragment;
         }
         return null;
     }
 
     @Nullable
-    public BaseFragment getTopFragment() {
+    public SupportFragment getTopFragment() {
         List<Fragment> fragments = manager.getFragments();
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (f instanceof BaseFragment) {
-                return (BaseFragment) f;
+            if (f instanceof SupportFragment) {
+                return (SupportFragment) f;
             }
         }
         return null;
