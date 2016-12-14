@@ -81,9 +81,6 @@ public class FragmentsUtil {
         ft.commit();
     }
 
-    public void clearFragmentTo() {
-//        manager.popBackStack("",);
-    }
 
     public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
         int flag;
