@@ -14,8 +14,7 @@
         android:visibility="visible"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         >
 
         <!--<android.support.v4.view.ViewPager-->
@@ -29,11 +28,12 @@
 
     </FrameLayout>
 
-    <!--<fragment-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:name="com.lovejjfg.fragments.Fragment9"-->
-        <!--tools:layout="@layout/fragment_5">-->
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:name="com.lovejjfg.fragments.Fragment2"
+        tools:layout="@layout/activity_main"/>
 
     <!--</fragment>-->
 </LinearLayout>

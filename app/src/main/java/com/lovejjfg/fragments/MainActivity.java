@@ -33,7 +33,7 @@ public class MainActivity extends SupportActivity {
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
-            fragmentsUtil.loadRoot(R.id.fragment_container, Fragment9.newInstance());
+            fragmentsUtil.loadRoot(R.id.fragment_container, Fragment1.newInstance(1));
 
         }
 
