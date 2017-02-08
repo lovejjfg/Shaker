@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends SupportActivity {
 
-    private FragmentManager manager;
     private static final String T1 = "T1";
     private static final String T2 = "T2";
     private static final String T3 = "T3";
@@ -29,12 +28,10 @@ public class MainActivity extends SupportActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        manager = getSupportFragmentManager();
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
-            fragmentsUtil.loadRoot(R.id.fragment_container, Fragment1.newInstance(1));
-
+            loadRoot(R.id.fragment_container, Fragment1.newInstance(1));
         }
 
 

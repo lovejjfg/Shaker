@@ -2,6 +2,7 @@ package com.lovejjfg.sview;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,6 +19,16 @@ import com.lovejjfg.sview.utils.KeyBoardUtil;
 public abstract class SupportActivity extends AppCompatActivity implements ISupportFragment {
 
     public FragmentsUtil fragmentsUtil;
+
+    @Override
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
+        fragmentsUtil.addToParent(containerViewId, parent, pos,children);
+    }
+
+    @Override
+    public void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... children) {
+        fragmentsUtil.replaceToParent(containerViewId, parent, children);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +58,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     }
 
     @Override
-    public void loadRoot(int containerViewId, SupportFragment root) {
+    public void loadRoot(int containerViewId, SupportFragment... root) {
         fragmentsUtil.loadRoot(containerViewId, root);
     }
 

@@ -48,6 +48,6 @@ public class Fragment6 extends SupportFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Log.e(TAG, "onClick: " + v.getId());
+        Log.e(TAG, "onClick:fragment6 " + v.getId());
     }
 }

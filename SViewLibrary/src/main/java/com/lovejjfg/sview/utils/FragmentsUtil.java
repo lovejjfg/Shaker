@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.lovejjfg.sview.SupportFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,6 +37,27 @@ public class FragmentsUtil {
 
     }
 
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent,int pos, SupportFragment... childs) {
+        FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
+        if (childs != null && childs.length > 0) {
+            addFragmentsToStack(containerViewId, pos, transaction, childs);
+        }
+    }
+
+    public void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... childs) {
+        FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
+        if (childs != null && childs.length > 0) {
+            for (SupportFragment child : childs) {
+                child.parentFragment = parent;
+                bindContainerId(containerViewId, child);
+                String tag = child.getClass().getSimpleName();
+                transaction.replace(containerViewId, child, tag)
+                        .addToBackStack(tag);
+            }
+            transaction.commit();
+        }
+    }
+
     public void replaceToShow(SupportFragment from, SupportFragment to) {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
@@ -46,15 +68,31 @@ public class FragmentsUtil {
 
     }
 
-    public void loadRoot(int containerViewId, SupportFragment root) {
-        bindContainerId(containerViewId, root);
+    public void loadRoot(int containerViewId,int pos, SupportFragment... roots) {
         FragmentTransaction transaction = manager.beginTransaction();
-        String tag = root.getClass().getSimpleName();
-        transaction.add(containerViewId, root, tag)
-                .addToBackStack(tag)
-                .commit();
+        addFragmentsToStack(containerViewId, pos, transaction, roots);
+    }
 
+    private void addFragmentsToStack(int containerViewId, int pos, FragmentTransaction transaction, SupportFragment[] fragments) {
+        if (fragments != null && fragments.length > 0) {
+            if (pos >= fragments.length || pos < 0) {
+                throw new IndexOutOfBoundsException("Index: " + pos + ", Size: " + fragments.length);
+            }
+            for (int i = 0; i < fragments.length; i++) {
+                SupportFragment f = fragments[i];
+                bindContainerId(containerViewId, f);
+                String tag = f.getClass().getSimpleName();
+                transaction.add(containerViewId, f, tag)
+                        .addToBackStack(tag);
 
+                if (i == pos) {
+                    transaction.show(f);
+                } else {
+                    transaction.hide(f);
+                }
+            }
+            transaction.commit();
+        }
     }
 
     private void bindContainerId(int containerId, SupportFragment to) {

@@ -1,6 +1,7 @@
 package com.lovejjfg.sview;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 /**
@@ -17,13 +18,18 @@ public interface ISupportFragment extends ISupportView {
     @Nullable
     SupportFragment findFragment(String className);
 
-    void loadRoot(int containerViewId, SupportFragment root);
+    void loadRoot(int containerViewId, SupportFragment... root);
 
     void addToShow(SupportFragment from, SupportFragment to);
 
     boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf);
 
     void replaceToShow(SupportFragment from, SupportFragment to);
+
+    void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children);
+
+
+    void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... children);
 
     void saveViewData(Bundle bundle);
 

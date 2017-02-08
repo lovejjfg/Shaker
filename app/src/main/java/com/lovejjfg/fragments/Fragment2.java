@@ -51,9 +51,9 @@ public class Fragment2 extends SupportFragment implements View.OnClickListener {
     TextView tv2;
     @Bind(R.id.tab3)
     TextView tv3;
-    private Fragment f4;
-    private Fragment f5;
-    private Fragment f6;
+    private SupportFragment f4;
+    private SupportFragment f5;
+    private SupportFragment f6;
     private static final String T4 = "t4";
     private static final String T5 = "t5";
     private static final String T6 = "t6";
@@ -70,17 +70,18 @@ public class Fragment2 extends SupportFragment implements View.OnClickListener {
             f5 = new Fragment5();
             f6 = new Fragment7();
 
-            manager.beginTransaction()
-                    .add(R.id.child_container, f4, T4)
-                    .add(R.id.child_container, f5, T5)
-                    .hide(f5)
-                    .add(R.id.child_container, f6, T6)
-                    .hide(f6)
-                    .commit();
+//            manager.beginTransaction()
+//                    .add(R.id.child_container, f4, T4)
+//                    .add(R.id.child_container, f5, T5)
+//                    .hide(f5)
+//                    .add(R.id.child_container, f6, T6)
+//                    .hide(f6)
+//                    .commit();
+            addToParent(R.id.child_container, this, 1, f4, f5, f6);
         } else {
-            f4 = manager.findFragmentByTag(T4);
-            f5 = manager.findFragmentByTag(T5);
-            f6 = manager.findFragmentByTag(T6);
+            f4 = (SupportFragment) manager.findFragmentByTag(T4);
+            f5 = (SupportFragment) manager.findFragmentByTag(T5);
+            f6 = (SupportFragment) manager.findFragmentByTag(T6);
         }
 
 
