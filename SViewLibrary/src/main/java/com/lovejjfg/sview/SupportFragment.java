@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 /**
  * Created by Joe on 2016/10/13.
  * Email lovejjfg@gmail.com
@@ -24,7 +26,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     @Nullable
     private SupportActivity activity;
     public boolean isRoot;
-    public Fragment parentFragment;
+    public SupportFragment parentFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,7 +154,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Nullable
     @Override
-    public SupportFragment getTopFragment() {
+    public List<Fragment> getTopFragment() {
         if (activity != null) {
             return activity.getTopFragment();
         }

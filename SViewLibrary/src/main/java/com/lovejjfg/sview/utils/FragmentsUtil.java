@@ -37,10 +37,10 @@ public class FragmentsUtil {
 
     }
 
-    public void addToParent(int containerViewId, @NonNull SupportFragment parent,int pos, SupportFragment... childs) {
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... childs) {
         FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
         if (childs != null && childs.length > 0) {
-            addFragmentsToStack(containerViewId, pos, transaction, childs);
+            addFragmentsToStack(parent, containerViewId, pos, transaction, false, childs);
         }
     }
 
@@ -68,18 +68,22 @@ public class FragmentsUtil {
 
     }
 
-    public void loadRoot(int containerViewId,int pos, SupportFragment... roots) {
+    public void loadRoot(int containerViewId, int pos, SupportFragment... roots) {
         FragmentTransaction transaction = manager.beginTransaction();
-        addFragmentsToStack(containerViewId, pos, transaction, roots);
+        addFragmentsToStack(null, containerViewId, pos, transaction, true, roots);
     }
 
-    private void addFragmentsToStack(int containerViewId, int pos, FragmentTransaction transaction, SupportFragment[] fragments) {
+    private void addFragmentsToStack(SupportFragment parent, int containerViewId, int pos, FragmentTransaction transaction, boolean isRoot, SupportFragment[] fragments) {
         if (fragments != null && fragments.length > 0) {
             if (pos >= fragments.length || pos < 0) {
                 throw new IndexOutOfBoundsException("Index: " + pos + ", Size: " + fragments.length);
             }
             for (int i = 0; i < fragments.length; i++) {
                 SupportFragment f = fragments[i];
+                f.isRoot = isRoot;
+                if (parent != null && !isRoot) {
+                    f.parentFragment = parent;
+                }
                 bindContainerId(containerViewId, f);
                 String tag = f.getClass().getSimpleName();
                 transaction.add(containerViewId, f, tag)
@@ -144,13 +148,34 @@ public class FragmentsUtil {
     }
 
     @Nullable
-    public SupportFragment getTopFragment() {
+    public List<Fragment> getTopFragment() {
+        List<Fragment> fragments = manager.getFragments();
+        List<Fragment> topFragments = new ArrayList<>();
+        int size = fragments.size();
+        for (int i = size - 1; i >= 0; i--) {
+            Fragment f = fragments.get(i);
+            if (!f.isHidden()) {
+                Fragment t = getTTopFragment(f.getFragmentManager());
+                if (t != null) {
+                    topFragments.add(t);
+                }
+            }
+        }
+        return topFragments;
+    }
+
+    @Nullable
+    private Fragment getTTopFragment(FragmentManager manager) {
         List<Fragment> fragments = manager.getFragments();
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (f instanceof SupportFragment) {
-                return (SupportFragment) f;
+            // TODO: 2017/2/8 每个层级可能都有几个显示的
+            if (!f.isHidden() && f instanceof SupportFragment) {
+                if (((SupportFragment) f).isRoot) {
+                    return getTTopFragment(f.getChildFragmentManager());
+                }
+                return f;
             }
         }
         return null;

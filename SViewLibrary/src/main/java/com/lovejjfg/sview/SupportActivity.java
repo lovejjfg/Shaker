@@ -4,11 +4,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.lovejjfg.sview.utils.FragmentsUtil;
 import com.lovejjfg.sview.utils.KeyBoardUtil;
+
+import java.util.List;
 
 
 /**
@@ -22,7 +25,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
-        fragmentsUtil.addToParent(containerViewId, parent, pos,children);
+        fragmentsUtil.addToParent(containerViewId, parent, pos, children);
     }
 
     @Override
@@ -47,7 +50,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Nullable
     @Override
-    public SupportFragment getTopFragment() {
+    public List<Fragment> getTopFragment() {
         return fragmentsUtil.getTopFragment();
     }
 
@@ -59,7 +62,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public void loadRoot(int containerViewId, SupportFragment... root) {
-        fragmentsUtil.loadRoot(containerViewId, root);
+        fragmentsUtil.loadRoot(containerViewId, 0, root);
     }
 
     @Override
@@ -127,8 +130,15 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     public boolean finishSelf() {
-        SupportFragment topFragment = getTopFragment();
-        if (topFragment == null || !topFragment.finishSelf()) {
+        List<Fragment> topFragments = getTopFragment();
+
+        if (topFragments != null && !topFragments.isEmpty()) {
+            for (Fragment fragment : topFragments) {
+                if (fragment instanceof SupportFragment) {
+                    ((SupportFragment) fragment).finishSelf();
+                    // TODO: 2017/2/8 如果多个Fragment可见的时候相关处理
+                }
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 finishAfterTransition();
             } else {

@@ -3,6 +3,9 @@ package com.lovejjfg.sview;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+
+import java.util.List;
 
 /**
  * Created by Joe on 2016/11/13.
@@ -13,7 +16,7 @@ public interface ISupportFragment extends ISupportView {
     void initFragments(Bundle savedInstanceState, SupportFragment fragment);
 
     @Nullable
-    SupportFragment getTopFragment();
+    List<Fragment> getTopFragment();
 
     @Nullable
     SupportFragment findFragment(String className);
