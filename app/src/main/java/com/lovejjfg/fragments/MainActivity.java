@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import com.lovejjfg.sview.ShakeHelper;
+import com.lovejjfg.sview.utils.ShakeHelper;
 import com.lovejjfg.sview.SupportActivity;
 
 import butterknife.ButterKnife;

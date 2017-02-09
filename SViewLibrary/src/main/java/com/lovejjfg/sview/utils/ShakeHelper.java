@@ -1,4 +1,4 @@
-package com.lovejjfg.sview;
+package com.lovejjfg.sview.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,8 +9,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-
-import com.lovejjfg.sview.utils.FragmentsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +76,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
                     .abs(z) > 17) && !dialog.isShowing()) {
                 List<Fragment> topFragments = fragmentsUtil.getTopFragments();
                 if (topFragments == null) {
-                    sb.append(this.getClass().getSimpleName());
+                    sb.append(context.getClass().getSimpleName());
                     dialog.setMessage(sb.toString());
                     dialog.show();
                     return;
@@ -86,7 +84,11 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
                 //从最top的Fragment回溯parent，到了root的时候结束。
                 ArrayList<Fragment> names;
                 for (Fragment topFragment : topFragments) {
-                    sb.append(this.getClass().getSimpleName());
+                    //Glide 使用Fragment来控制相关的request，不再考虑的范围内
+                    if ("com.bumptech.glide.manager.SupportRequestManagerFragment".equals(topFragment.getClass().getName())) {
+                        continue;
+                    }
+                    sb.append(context.getClass().getSimpleName());
                     names = new ArrayList<>();
                     while (topFragment != null) {
                         names.add(0, topFragment);
@@ -104,6 +106,10 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
                     sb.append("\n\n");
 
                 }
+                // confirm at last
+                if (sb.length() == 0) {
+                    sb.append(context.getClass().getSimpleName());
+                }
                 dialog.setMessage(sb.toString());
                 dialog.show();
             }
@@ -114,4 +120,5 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 }
