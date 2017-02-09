@@ -26,7 +26,6 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     @Nullable
     private SupportActivity activity;
     public boolean isRoot;
-    public SupportFragment parentFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

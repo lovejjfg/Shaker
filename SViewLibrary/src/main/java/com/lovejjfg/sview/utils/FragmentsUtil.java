@@ -48,7 +48,6 @@ public class FragmentsUtil {
         FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
         if (childs != null && childs.length > 0) {
             for (SupportFragment child : childs) {
-                child.parentFragment = parent;
                 bindContainerId(containerViewId, child);
                 String tag = child.getClass().getSimpleName();
                 transaction.replace(containerViewId, child, tag)
@@ -81,9 +80,6 @@ public class FragmentsUtil {
             for (int i = 0; i < fragments.length; i++) {
                 SupportFragment f = fragments[i];
                 f.isRoot = isRoot;
-                if (parent != null && !isRoot) {
-                    f.parentFragment = parent;
-                }
                 bindContainerId(containerViewId, f);
                 String tag = f.getClass().getSimpleName();
                 transaction.add(containerViewId, f, tag)
@@ -177,10 +173,8 @@ public class FragmentsUtil {
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
             if (!f.isHidden()) {
-//                if (((SupportFragment) f).isRoot) {
                 Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
                 return tTopFragment == null ? f : tTopFragment;
-//                }
             }
         }
         return null;
