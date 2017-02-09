@@ -15,7 +15,6 @@ import android.util.Log;
 import com.lovejjfg.sview.SupportActivity;
 import com.lovejjfg.sview.SupportFragment;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class MainActivity extends SupportActivity implements SensorEventListener
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
             loadRoot(R.id.fragment_container, Fragment1.newInstance(1));
-            loadRoot(R.id.container2, Fragment2.newInstance(1));
+//            loadRoot(R.id.container2, Fragment2.newInstance(1));
         }
     }
 
@@ -113,23 +112,33 @@ public class MainActivity extends SupportActivity implements SensorEventListener
                     .abs(z) > 17) && !dialog.isShowing()) {
                 List<Fragment> topFragments = getTopFragment();
                 if (topFragments == null) {
-                    sb.append(this.getClass().getName());
+                    sb.append(this.getClass().getSimpleName());
                     dialog.setMessage(sb.toString());
                     dialog.show();
                     return;
                 }
-                sb.append(this.getClass().getName());
-                ArrayList<Fragment> names = new ArrayList<>();
-                // TODO: 2017/2/8 显示有问题
+                //从最top的Fragment回溯parent，到了root的时候结束。
+                ArrayList<Fragment> names;
                 for (Fragment topFragment : topFragments) {
+                    sb.append(this.getClass().getSimpleName());
+                    names = new ArrayList<>();
                     while (topFragment != null) {
                         names.add(0, topFragment);
-                        topFragment = ((SupportFragment)topFragment).parentFragment;
+                        topFragment = ((SupportFragment) topFragment).parentFragment;
                     }
-                    for (Fragment name : names) {
-                        sb.append(File.separator).append(name.getClass().getName());
+                    int length = names.size();
+                    for (int i = 0; i < length; i++) {
+                        Fragment name = names.get(i);
+                        sb.append("\n");
+                        for (int j = 0; j <= i; j++) {
+                            sb.append(getString(R.string.space));
+                        }
+                        sb.append(name.getClass().getSimpleName());
                     }
+                    sb.append("\n\n");
+
                 }
+
 
                 dialog.setMessage(sb.toString());
                 dialog.show();

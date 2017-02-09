@@ -51,7 +51,7 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     @Nullable
     @Override
     public List<Fragment> getTopFragment() {
-        return fragmentsUtil.getTopFragment();
+        return fragmentsUtil.getTopFragments();
     }
 
     @Nullable

@@ -148,34 +148,39 @@ public class FragmentsUtil {
     }
 
     @Nullable
-    public List<Fragment> getTopFragment() {
+    public List<Fragment> getTopFragments() {
         List<Fragment> fragments = manager.getFragments();
         List<Fragment> topFragments = new ArrayList<>();
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
             if (!f.isHidden()) {
-                Fragment t = getTTopFragment(f.getFragmentManager());
+                Fragment t = getTopFragment(f.getChildFragmentManager());//递归
                 if (t != null) {
                     topFragments.add(t);
+                } else {
+                    topFragments.add(f);
                 }
             }
+
         }
         return topFragments;
     }
 
     @Nullable
-    private Fragment getTTopFragment(FragmentManager manager) {
+    private Fragment getTopFragment(FragmentManager manager) {
         List<Fragment> fragments = manager.getFragments();
+        if (fragments == null) {
+            return null;
+        }
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            // TODO: 2017/2/8 每个层级可能都有几个显示的
-            if (!f.isHidden() && f instanceof SupportFragment) {
-                if (((SupportFragment) f).isRoot) {
-                    return getTTopFragment(f.getChildFragmentManager());
-                }
-                return f;
+            if (!f.isHidden()) {
+//                if (((SupportFragment) f).isRoot) {
+                Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
+                return tTopFragment == null ? f : tTopFragment;
+//                }
             }
         }
         return null;
