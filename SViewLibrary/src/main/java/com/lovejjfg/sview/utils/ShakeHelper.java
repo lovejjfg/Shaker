@@ -8,7 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
         dialog = new AlertDialog.Builder(context).create();
         dialog.setOnDismissListener(this);
         sb = new StringBuilder();
-        fragmentsUtil = new FragmentsUtil(((AppCompatActivity) context).getSupportFragmentManager());
+        fragmentsUtil = new FragmentsUtil(((FragmentActivity) context).getSupportFragmentManager());
     }
 
     public static ShakeHelper initShakeHelper(Context context) {
