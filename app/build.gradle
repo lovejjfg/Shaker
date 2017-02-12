@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION as String
     defaultConfig {
-        applicationId "com.lovejjfg.uc_pullrefresh"
-        minSdkVersion 21
-        targetSdkVersion 24
+        applicationId "com.lovejjfg.fragments"
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,18 +16,27 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            applicationIdSuffix '.debug'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile project(':SViewLibrary')
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
+    compile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
+    testCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
+    androidTestCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
+    compile "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
+    compile "com.android.support:cardview-v7:${SUPPORT_V7_VERSION}"
+    compile "com.android.support:design:${SUPPORT_V7_VERSION}"
+    compile "com.android.support:recyclerview-v7:${SUPPORT_V7_VERSION}"
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.lovejjfg.powerrecycle:powerrecycle:1.0.0'
 
@@ -39,4 +48,16 @@ dependencies {
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     testCompile 'junit:junit:4.12'
+
+    //  Robolectric
+    testCompile "org.robolectric:robolectric:3.1.2"
+
+    //  AssertJ
+    testCompile 'com.squareup.assertj:assertj-android:1.1.0'
+
+    //  PowerMock + Mockito
+    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
+    testCompile "org.powermock:powermock-module-junit4-rule:1.6.5"
+    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
+    testCompile "org.powermock:powermock-classloading-xstream:1.6.5"
 }

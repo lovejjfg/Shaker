@@ -2,6 +2,10 @@
 
 <LinearLayout android:id="@+id/activity_main"
               xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+=======
+              xmlns:tools="http://schemas.android.com/tools"
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#fff"

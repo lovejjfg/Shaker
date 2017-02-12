@@ -10,7 +10,11 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
+<<<<<<< HEAD
     <!--<pullrefreshsh.widget.CurveLayout-->
+=======
+    <!--<com.example.tt.fragments.widget.CurveLayout-->
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
     <!--android:id="@+id/curve_container"-->
     <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
@@ -23,7 +27,11 @@
     <!--android:orientation="vertical"-->
     <!--&gt;-->
 
+<<<<<<< HEAD
     <com.example.tt.pullrefresh.widget.CurveView
+=======
+    <com.lovejjfg.fragments.widget.CurveView
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
         android:id="@+id/ts"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -48,7 +56,11 @@
         app:tabMode="scrollable">
     </android.support.design.widget.TabLayout>
 
+<<<<<<< HEAD
     <com.example.tt.pullrefresh.widget.CurveLayout
+=======
+    <com.lovejjfg.fragments.widget.CurveLayout
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,14 +74,22 @@
             android:orientation="vertical">
 
 
+<<<<<<< HEAD
             <com.example.tt.pullrefresh.widget.ScrollAbleViewPager
+=======
+            <com.lovejjfg.fragments.widget.ScrollAbleViewPager
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
                 android:id="@+id/view_pager"
                 android:background="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 >
+<<<<<<< HEAD
             </com.example.tt.pullrefresh.widget.ScrollAbleViewPager>
+=======
+            </com.lovejjfg.fragments.widget.ScrollAbleViewPager>
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
 
 
             <LinearLayout
@@ -100,8 +120,13 @@
             </LinearLayout>
 
         </FrameLayout>
+<<<<<<< HEAD
     </com.example.tt.pullrefresh.widget.CurveLayout>
     <!--</pullrefreshsh.widget.CurveLayout>-->
+=======
+    </com.lovejjfg.fragments.widget.CurveLayout>
+    <!--</com.example.tt.fragments.widget.CurveLayout>-->
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
 </FrameLayout>
 
 

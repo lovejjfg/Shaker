@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UCPullRefresh</string>
+    <string name="app_name">Fragments</string>
     <string name="this_1">这是一这是一这是一这是一这是一这是一这是一这是一这是一</string>
     <string name="this_2">这是二这是二这是二这是二这是二这是二这是二这是二这是二</string>
     <string name="this_3">这是三这是三这是三这是三这是三这是三这是三这是三这是三</string>
@@ -11,6 +11,9 @@
     <string name="action_search">search</string>
     <string name="search_hint">输入一些要搜索的东西</string>
     <string name="share">分享</string>
+    <string name="jump">跳转下一个</string>
+    <string name="pre">返回上一个</string>
+    <string name="home">回到首页</string>
     <string-array name="names">
         <item>"唉哟"</item>
         <item>"不要"</item>
@@ -138,4 +141,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="space">&#160;&#160;&#160;&#160;</string>
 </resources>

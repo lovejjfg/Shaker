@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<<<<<<< HEAD
 <com.example.tt.pullrefresh.widget.HeaderRefreshLayout
+=======
+<com.lovejjfg.fragments.widget.HeaderRefreshLayout
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header_container"
     android:layout_width="match_parent"
@@ -16,5 +20,9 @@
         android:clipToPadding="false"
         >
     </android.support.v7.widget.RecyclerView>
+<<<<<<< HEAD
 </com.example.tt.pullrefresh.widget.HeaderRefreshLayout>
+=======
+</com.lovejjfg.fragments.widget.HeaderRefreshLayout>
+>>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b
 
