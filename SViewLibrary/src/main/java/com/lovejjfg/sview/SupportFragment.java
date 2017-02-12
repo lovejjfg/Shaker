@@ -34,7 +34,6 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(ARG_IS_HIDDEN, isHidden());
         super.onSaveInstanceState(outState);
-
     }
 
     @Override
