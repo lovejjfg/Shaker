@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.example.tt.pullrefresh.holder.ListNormalHolder;
 import com.example.tt.pullrefresh.model.ModelBean;
 import com.example.tt.pullrefresh.OnItemClickListener;
-import com.example.tt.pullrefresh.R;
 import com.example.tt.pullrefresh.holder.ListBigImgHolder;
+import com.lovejjfg.fragments.R;
 import com.lovejjfg.powerrecycle.RefreshRecycleAdapter;
 
 import static com.example.tt.pullrefresh.Constants.TYPE_BIG_IMG;

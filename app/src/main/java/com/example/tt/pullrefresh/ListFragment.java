@@ -18,6 +18,7 @@ import com.example.tt.pullrefresh.model.ModelBean;
 import com.example.tt.pullrefresh.widget.CurveLayout;
 import com.example.tt.pullrefresh.widget.HeaderRefreshLayout;
 import com.example.tt.pullrefresh.widget.TouchCircleView;
+import com.lovejjfg.fragments.R;
 
 import java.util.ArrayList;
 

@@ -15,6 +15,7 @@ import com.example.tt.pullrefresh.base.BaseFragment;
 import com.example.tt.pullrefresh.widget.CurveLayout;
 import com.example.tt.pullrefresh.widget.CurveView;
 import com.example.tt.pullrefresh.widget.ScrollAbleViewPager;
+import com.lovejjfg.fragments.R;
 
 import java.util.ArrayList;
 

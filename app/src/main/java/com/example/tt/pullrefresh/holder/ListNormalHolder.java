@@ -5,8 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tt.pullrefresh.R;
 import com.example.tt.pullrefresh.model.ModelBean;
+import com.lovejjfg.fragments.R;
 
 
 /**

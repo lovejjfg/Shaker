@@ -22,7 +22,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.example.tt.pullrefresh.R;
+
+import com.lovejjfg.fragments.R;
 
 import java.util.ArrayList;
 

@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-
-<FrameLayout
-    android:id="@+id/fragment_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-</FrameLayout>
-
-
-=======
 <LinearLayout
     android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,4 +41,3 @@
         android:layout_weight="1"
         tools:layout="@layout/activity_main"/>
 </LinearLayout>
->>>>>>> 4026acb3f73cd612f5e938e3620f37fd0ec3b03b

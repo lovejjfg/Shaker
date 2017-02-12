@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
 
-import com.example.tt.pullrefresh.R;
+import com.lovejjfg.fragments.R;
 
 import butterknife.BindColor;
 import butterknife.BindDimen;
