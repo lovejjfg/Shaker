@@ -9,74 +9,35 @@
     tools:context="com.lovejjfg.fragments.MainActivity">
 
 
-
     <FrameLayout
-        android:visibility="visible"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
         >
 
         <!--<android.support.v4.view.ViewPager-->
-            <!--android:id="@+id/view_pager"-->
-            <!--android:layout_width="200dp"-->
-            <!--android:layout_height="200dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:clipChildren="false"-->
-            <!--android:overScrollMode="never">-->
+        <!--android:id="@+id/view_pager"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:clipChildren="false"-->
+        <!--android:overScrollMode="never">-->
         <!--</android.support.v4.view.ViewPager>-->
 
     </FrameLayout>
 
-    <!--<fragment-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:name="com.lovejjfg.fragments.Fragment9"-->
-        <!--&gt;-->
+    <!--<FrameLayout-->
+    <!--android:id="@+id/container2"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1"-->
+    <!--tools:layout="@layout/activity_main"/>-->
 
-    <!--</fragment>-->
-
-    <LinearLayout
-        android:visibility="visible"
-        android:id="@+id/rg_container"
-        android:orientation="horizontal"
+    <fragment
+        android:name="com.lovejjfg.fragments.Fragment2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/tab1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:checked="true"
-            android:text="1"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:textColor="@color/check_color"
-            />
-
-        <TextView
-            android:id="@+id/tab2"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.01"
-            android:gravity="center"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:textColor="@color/check_color"
-            />
-
-        <TextView
-            android:id="@+id/tab3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/check_color"
-            android:drawableTop="@mipmap/ic_launcher"
-            android:text="3"
-            />
-    </LinearLayout>
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/activity_main"/>
 </LinearLayout>

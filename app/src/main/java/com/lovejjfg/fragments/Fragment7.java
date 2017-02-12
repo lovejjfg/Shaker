@@ -34,11 +34,12 @@ public class Fragment7 extends SupportFragment implements View.OnClickListener {
     /**
      * Returns a new instance of this fragment for the given section
      * number.
+     * @param sectionNumber
      */
-    public static Fragment7 newInstance() {
+    public static Fragment7 newInstance(String sectionNumber) {
         Fragment7 fragment = new Fragment7();
         Bundle args = new Bundle();
-        args.putString(ARG_SECTION_NUMBER, "Fragment7");
+        args.putString(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }

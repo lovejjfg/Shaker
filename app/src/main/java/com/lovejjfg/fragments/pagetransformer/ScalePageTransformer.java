@@ -36,6 +36,7 @@ public class ScalePageTransformer implements ViewPager.PageTransformer {
         float scaleValue = MIN_SCALE + tempScale * slope;
         page.setScaleX(scaleValue);
         page.setScaleY(scaleValue);
+//        mViewPager.setPageMargin((int) (10*scaleValue));
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             page.getParent().requestLayout();

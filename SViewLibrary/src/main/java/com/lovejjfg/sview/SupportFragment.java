@@ -2,12 +2,15 @@ package com.lovejjfg.sview;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 /**
  * Created by Joe on 2016/10/13.
@@ -22,6 +25,8 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     public String tagName;
     @Nullable
     private SupportActivity activity;
+    public boolean isRoot;
+    public SupportFragment parentFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +114,20 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     }
 
     @Override
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
+        if (activity != null) {
+            activity.addToParent(containerViewId, parent,pos, children);
+        }
+    }
+
+    @Override
+    public void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... children) {
+        if (activity != null) {
+            activity.replaceToParent(containerViewId, parent, children);
+        }
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         Log.e(TAG, "setUserVisibleHint: " + tagName + ";isVisible:" + isVisibleToUser);
         super.setUserVisibleHint(isVisibleToUser);
@@ -134,7 +153,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
 
     @Nullable
     @Override
-    public SupportFragment getTopFragment() {
+    public List<Fragment> getTopFragment() {
         if (activity != null) {
             return activity.getTopFragment();
         }
@@ -151,7 +170,7 @@ public abstract class SupportFragment extends Fragment implements ISupportFragme
     }
 
     @Override
-    public void loadRoot(int containerViewId, SupportFragment root) {
+    public void loadRoot(int containerViewId, SupportFragment... root) {
         if (activity != null) {
             activity.loadRoot(containerViewId, root);
         }

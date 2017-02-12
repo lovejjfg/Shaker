@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.lovejjfg.sview.SupportFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,6 +37,27 @@ public class FragmentsUtil {
 
     }
 
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... childs) {
+        FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
+        if (childs != null && childs.length > 0) {
+            addFragmentsToStack(parent, containerViewId, pos, transaction, false, childs);
+        }
+    }
+
+    public void replaceToParent(int containerViewId, @NonNull SupportFragment parent, SupportFragment... childs) {
+        FragmentTransaction transaction = parent.getChildFragmentManager().beginTransaction();
+        if (childs != null && childs.length > 0) {
+            for (SupportFragment child : childs) {
+                child.parentFragment = parent;
+                bindContainerId(containerViewId, child);
+                String tag = child.getClass().getSimpleName();
+                transaction.replace(containerViewId, child, tag)
+                        .addToBackStack(tag);
+            }
+            transaction.commit();
+        }
+    }
+
     public void replaceToShow(SupportFragment from, SupportFragment to) {
         bindContainerId(from.getContainerId(), to);
         FragmentTransaction transaction = manager.beginTransaction();
@@ -46,28 +68,35 @@ public class FragmentsUtil {
 
     }
 
-    public void loadRoot(int containerViewId, SupportFragment root) {
-        bindContainerId(containerViewId, root);
+    public void loadRoot(int containerViewId, int pos, SupportFragment... roots) {
         FragmentTransaction transaction = manager.beginTransaction();
-        String tag = root.getClass().getSimpleName();
-        transaction.add(containerViewId, root, tag)
-                .addToBackStack(tag)
-                .commit();
+        addFragmentsToStack(null, containerViewId, pos, transaction, true, roots);
     }
 
-    public void loadRoots(int containerViewId, int showIndex, BaseFragment... root) {
-        for (int i = 0; i < root.length; i++) {
-            bindContainerId(containerViewId, root[i]);
-            FragmentTransaction transaction = manager.beginTransaction();
-            String tag = root[i].getClass().getSimpleName();
-            transaction.add(containerViewId, root[i], tag).hide(root[i]);
-            if (i == showIndex) {
-                transaction.show(root[i]);
+    private void addFragmentsToStack(SupportFragment parent, int containerViewId, int pos, FragmentTransaction transaction, boolean isRoot, SupportFragment[] fragments) {
+        if (fragments != null && fragments.length > 0) {
+            if (pos >= fragments.length || pos < 0) {
+                throw new IndexOutOfBoundsException("Index: " + pos + ", Size: " + fragments.length);
             }
-            transaction.addToBackStack(tag)
-                    .commit();
-        }
+            for (int i = 0; i < fragments.length; i++) {
+                SupportFragment f = fragments[i];
+                f.isRoot = isRoot;
+                if (parent != null && !isRoot) {
+                    f.parentFragment = parent;
+                }
+                bindContainerId(containerViewId, f);
+                String tag = f.getClass().getSimpleName();
+                transaction.add(containerViewId, f, tag)
+                        .addToBackStack(tag);
 
+                if (i == pos) {
+                    transaction.show(f);
+                } else {
+                    transaction.hide(f);
+                }
+            }
+            transaction.commit();
+        }
     }
 
     private void bindContainerId(int containerId, SupportFragment to) {
@@ -94,9 +123,6 @@ public class FragmentsUtil {
         ft.commit();
     }
 
-    public void clearFragmentTo() {
-//        manager.popBackStack("",);
-    }
 
     public boolean popTo(Class<? extends SupportFragment> target, boolean includeSelf) {
         int flag;
@@ -122,13 +148,39 @@ public class FragmentsUtil {
     }
 
     @Nullable
-    public SupportFragment getTopFragment() {
+    public List<Fragment> getTopFragments() {
         List<Fragment> fragments = manager.getFragments();
+        List<Fragment> topFragments = new ArrayList<>();
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (f instanceof SupportFragment) {
-                return (SupportFragment) f;
+            if (!f.isHidden()) {
+                Fragment t = getTopFragment(f.getChildFragmentManager());//递归
+                if (t != null) {
+                    topFragments.add(t);
+                } else {
+                    topFragments.add(f);
+                }
+            }
+
+        }
+        return topFragments;
+    }
+
+    @Nullable
+    private Fragment getTopFragment(FragmentManager manager) {
+        List<Fragment> fragments = manager.getFragments();
+        if (fragments == null) {
+            return null;
+        }
+        int size = fragments.size();
+        for (int i = size - 1; i >= 0; i--) {
+            Fragment f = fragments.get(i);
+            if (!f.isHidden()) {
+//                if (((SupportFragment) f).isRoot) {
+                Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
+                return tTopFragment == null ? f : tTopFragment;
+//                }
             }
         }
         return null;

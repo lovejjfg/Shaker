@@ -1,8 +1,9 @@
 *.iml
 .gradle
 /local.properties
-.DS_Store
+/.idea
 /build
+.DS_Store
 /captures
 .externalNativeBuild
 .idea

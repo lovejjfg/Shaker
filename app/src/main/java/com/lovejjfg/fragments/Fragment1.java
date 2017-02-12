@@ -1,7 +1,10 @@
 package com.lovejjfg.fragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.lovejjfg.fragments.model.ModelBean;
+import com.lovejjfg.fragments.pagetransformer.ScaleInTransformer;
 import com.lovejjfg.fragments.pagetransformer.ScalePageTransformer;
 import com.lovejjfg.sview.SupportFragment;
 
@@ -63,13 +67,17 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_1, container, false);
         ButterKnife.bind(this, rootView);
         mViewPager.setAdapter(new ImagePagerAdapter());
-        pageTransformer = new ScalePageTransformer(mViewPager);
+//        pageTransformer = new ScalePageTransformer(mViewPager);
+        ScaleInTransformer scaleInTransformer = new ScaleInTransformer();
         mViewPager.setPageMargin(20);
-        mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setPageTransformer(true, pageTransformer);
+        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setPageTransformer(false, scaleInTransformer);
 
-        if (savedInstanceState == null) {
+        mViewPager.setCurrentItem(5);
+//        mViewPager.setPageTransformer(false, pageTransformer);
 
+//        if (savedInstanceState == null) {
+//
 //            mViewPager.post(new Runnable() {
 //                @Override
 //                public void run() {
@@ -82,9 +90,9 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
 //                    mViewPager.setVisibility(View.VISIBLE);
 //                }
 //            }, 200);
-        } else {
-            mViewPager.setVisibility(View.VISIBLE);
-        }
+//        } else {
+//            mViewPager.setVisibility(View.VISIBLE);
+//        }
 
         return rootView;
     }
@@ -95,4 +103,8 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
         Log.e(TAG, "onClick: " + v.getId());
     }
 
+    @Override
+    public boolean finishSelf() {
+        return false;
+    }
 }

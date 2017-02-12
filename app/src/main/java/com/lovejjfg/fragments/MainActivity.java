@@ -1,41 +1,40 @@
 package com.lovejjfg.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.lovejjfg.sview.SupportActivity;
+import com.lovejjfg.sview.SupportFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends SupportActivity {
+public class MainActivity extends SupportActivity implements SensorEventListener, DialogInterface.OnDismissListener {
 
-    private FragmentManager manager;
-    @Bind(R.id.tab1)
-    TextView tv1;
-    @Bind(R.id.tab2)
-    TextView tv2;
-    @Bind(R.id.tab3)
-    TextView tv3;
-    //    @Bind(R.id.rg_container)
-//    RadioGroup radioGroup;
-    //    @Bind(R.id.view_pager)
-//    ViewPager mViewPager;
     private static final String T1 = "T1";
     private static final String T2 = "T2";
     private static final String T3 = "T3";
     private static final String CURRENT_TAG = "CURRENT_TAG";
     private static final String TAG = "MainActivity";
-    private BaseFragment f1;
-    private BaseFragment f2;
-    private BaseFragment f3;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometerSensor;
+    private AlertDialog dialog;
+    private StringBuilder sb;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -44,54 +43,38 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        dialog = new AlertDialog.Builder(this).create();
+        dialog.setOnDismissListener(this);
+        sb = new StringBuilder();
 
-        manager = getSupportFragmentManager();
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
-            fragmentsUtil.loadRoot(R.id.fragment_container, Fragment9.newInstance());
-
-        }
-
-
-    }
-
-    private void onClick(int checkedId) {
-        switch (checkedId) {
-            case R.id.tab1:
-                manager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-//                        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .show(f1)
-                        .hide(f3)
-                        .hide(f2)
-                        .commit();
-                break;
-            case R.id.tab2:
-                manager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .show(f2)
-                        .hide(f1)
-                        .hide(f3)
-                        .commit();
-                break;
-            case R.id.tab3:
-                manager.beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-//                        .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .show(f3)
-                        .hide(f1)
-                        .hide(f2)
-                        .commit();
-                break;
+            loadRoot(R.id.fragment_container, Fragment1.newInstance());
+//            loadRoot(R.id.container2, Fragment2.newInstance(1));
         }
     }
-
 
     @Override
-    public void onClick(View v) {
-        onClick(v.getId());
+    protected void onStart() {
+        super.onStart();
+        //获取 SensorManager 负责管理传感器
+        mSensorManager = ((SensorManager) getSystemService(SENSOR_SERVICE));
+        if (mSensorManager != null) {
+            //获取加速度传感器
+            mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            if (mAccelerometerSensor != null) {
+                mSensorManager.registerListener(this, mAccelerometerSensor, SensorManager.SENSOR_DELAY_UI);
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        if (mSensorManager != null) {
+            mSensorManager.unregisterListener(this);
+        }
+        super.onPause();
     }
 
     @Override
@@ -117,5 +100,64 @@ public class MainActivity extends SupportActivity {
     protected void onDestroy() {
         ListFragment.setCurveLayout(null);
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        int type = event.sensor.getType();
+        if (type == Sensor.TYPE_ACCELEROMETER) {
+            //获取三个方向值
+            float[] values = event.values;
+            float x = values[0];
+            float y = values[1];
+            float z = values[2];
+
+            if ((Math.abs(x) > 17 || Math.abs(y) > 17 || Math
+                    .abs(z) > 17) && !dialog.isShowing()) {
+                List<Fragment> topFragments = getTopFragment();
+                if (topFragments == null) {
+                    sb.append(this.getClass().getSimpleName());
+                    dialog.setMessage(sb.toString());
+                    dialog.show();
+                    return;
+                }
+                //从最top的Fragment回溯parent，到了root的时候结束。
+                ArrayList<Fragment> names;
+                for (Fragment topFragment : topFragments) {
+                    sb.append(this.getClass().getSimpleName());
+                    names = new ArrayList<>();
+                    while (topFragment != null) {
+                        names.add(0, topFragment);
+                        topFragment = ((SupportFragment) topFragment).parentFragment;
+                    }
+                    int length = names.size();
+                    for (int i = 0; i < length; i++) {
+                        Fragment name = names.get(i);
+                        sb.append("\n");
+                        for (int j = 0; j <= i; j++) {
+                            sb.append(getString(R.string.space));
+                        }
+                        sb.append(name.getClass().getSimpleName());
+                    }
+                    sb.append("\n\n");
+
+                }
+
+
+                dialog.setMessage(sb.toString());
+                dialog.show();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        sb.delete(0, sb.length());
     }
 }
