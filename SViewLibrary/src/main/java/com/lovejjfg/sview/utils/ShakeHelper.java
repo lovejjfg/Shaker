@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismissListener {
-
+    private static final String GLIDE_FRAGMENT = "com.bumptech.glide.manager.SupportRequestManagerFragment";
     private AlertDialog dialog;
     private StringBuilder sb;
     private Context context;
@@ -39,11 +39,11 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
             manager = ((FragmentActivity) context).getSupportFragmentManager();
         }
     }
-
+    //摇一摇是否可用，默认可用
     public void setEnable(boolean enable) {
         isEnable = enable;
     }
-
+    //获取摇一摇的实例
     public static ShakeHelper initShakeHelper(Context context) {
         return new ShakeHelper(context);
     }
@@ -53,7 +53,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     public void onDismiss(DialogInterface dialog) {
         sb.delete(0, sb.length());
     }
-
+    //回调Activity的onStart()
     public void onStart() {
         //获取 SensorManager 负责管理传感器
         mSensorManager = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE));
@@ -65,7 +65,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
             }
         }
     }
-
+    //回调Activity的onPause()
     public void onPause() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
@@ -75,7 +75,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     @Override
     public void onSensorChanged(SensorEvent event) {
         int type = event.sensor.getType();
-        if (type == Sensor.TYPE_ACCELEROMETER) {
+        if (type == Sensor.TYPE_ACCELEROMETER) {//accelerometer
             //获取三个方向值
             float[] values = event.values;
             float x = values[0];
@@ -89,19 +89,22 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
                     sb.append(context.getClass().getSimpleName());
                     dialog.setMessage(sb.toString());
                     dialog.show();
+                    //只有Activity不包含Fragment
                     return;
                 }
                 //从最top的Fragment回溯parent，到了root的时候结束。
                 ArrayList<Fragment> names;
                 for (Fragment topFragment : topFragments) {
                     //Glide 使用Fragment来控制相关的request，不再考虑的范围内
-                    if ("com.bumptech.glide.manager.SupportRequestManagerFragment".equals(topFragment.getClass().getName())) {
+                    if (GLIDE_FRAGMENT.equals(topFragment.getClass().getName())) {
                         continue;
                     }
+                    //先添加Activity的名称
                     sb.append(context.getClass().getSimpleName());
                     names = new ArrayList<>();
+                    //倒序找ParentFragment
                     while (topFragment != null) {
-                        names.add(0, topFragment);
+                        names.add(0, topFragment);//反转顺序
                         topFragment = topFragment.getParentFragment();
                     }
                     int length = names.size();
