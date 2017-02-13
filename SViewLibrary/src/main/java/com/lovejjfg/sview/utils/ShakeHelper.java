@@ -7,8 +7,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,22 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     private StringBuilder sb;
     private Context context;
     private SensorManager mSensorManager;
-    private FragmentsUtil fragmentsUtil;
+    private FragmentManager manager;
+
+    private boolean isEnable = true;
 
     private ShakeHelper(Context context) {
         this.context = context;
         dialog = new AlertDialog.Builder(context).create();
         dialog.setOnDismissListener(this);
         sb = new StringBuilder();
-        fragmentsUtil = new FragmentsUtil(((FragmentActivity) context).getSupportFragmentManager());
+        if (context instanceof FragmentActivity) {
+            manager = ((FragmentActivity) context).getSupportFragmentManager();
+        }
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
     }
 
     public static ShakeHelper initShakeHelper(Context context) {
@@ -47,7 +57,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     public void onStart() {
         //获取 SensorManager 负责管理传感器
         mSensorManager = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE));
-        if (mSensorManager != null) {
+        if (isEnable && mSensorManager != null) {
             //获取加速度传感器
             Sensor mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (mAccelerometerSensor != null) {
@@ -74,7 +84,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
 
             if ((Math.abs(x) > 17 || Math.abs(y) > 17 || Math
                     .abs(z) > 17) && !dialog.isShowing()) {
-                List<Fragment> topFragments = fragmentsUtil.getTopFragments();
+                List<Fragment> topFragments = getTopFragments();
                 if (topFragments == null) {
                     sb.append(context.getClass().getSimpleName());
                     dialog.setMessage(sb.toString());
@@ -106,7 +116,6 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
                     sb.append("\n\n");
 
                 }
-                // confirm at last
                 if (sb.length() == 0) {
                     sb.append(context.getClass().getSimpleName());
                 }
@@ -119,6 +128,50 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+
+    @Nullable
+    private List<Fragment> getTopFragments() {
+        if (manager == null) {
+            return null;
+        }
+        List<Fragment> fragments = manager.getFragments();
+        List<Fragment> topFragments = new ArrayList<>();
+        if (fragments == null) {
+            return null;
+        }
+        int size = fragments.size();
+        for (int i = size - 1; i >= 0; i--) {
+            Fragment f = fragments.get(i);
+            if (f.isAdded() && !f.isHidden()) {
+                Fragment t = getTopFragment(f.getChildFragmentManager());//递归
+                if (t != null) {
+                    topFragments.add(t);
+                } else {
+                    topFragments.add(f);
+                }
+            }
+
+        }
+        return topFragments;
+    }
+
+    @Nullable
+    private Fragment getTopFragment(FragmentManager manager) {
+        List<Fragment> fragments = manager.getFragments();
+        if (fragments == null) {
+            return null;
+        }
+        int size = fragments.size();
+        for (int i = size - 1; i >= 0; i--) {
+            Fragment f = fragments.get(i);
+            if (!f.isHidden()) {
+                Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
+                return tTopFragment == null ? f : tTopFragment;
+            }
+        }
+        return null;
     }
 
 }
