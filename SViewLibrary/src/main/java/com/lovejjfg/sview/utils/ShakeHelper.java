@@ -54,10 +54,12 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
             manager = ((FragmentActivity) context).getSupportFragmentManager();
         }
     }
+
     //摇一摇是否可用，默认可用
     public void setEnable(boolean enable) {
         isEnable = enable;
     }
+
     //获取摇一摇的实例
     public static ShakeHelper initShakeHelper(Context context) {
         return new ShakeHelper(context);
@@ -68,6 +70,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
     public void onDismiss(DialogInterface dialog) {
         sb.delete(0, sb.length());
     }
+
     //回调Activity的onStart()
     public void onStart() {
         //获取 SensorManager 负责管理传感器
@@ -162,7 +165,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (f.isAdded() && !f.isHidden()) {
+            if (f.isAdded() && !f.isHidden() && f.getUserVisibleHint()) {
                 Fragment t = getTopFragment(f.getChildFragmentManager());//递归
                 if (t != null) {
                     topFragments.add(t);
@@ -184,7 +187,7 @@ public class ShakeHelper implements SensorEventListener, DialogInterface.OnDismi
         int size = fragments.size();
         for (int i = size - 1; i >= 0; i--) {
             Fragment f = fragments.get(i);
-            if (f.isAdded() && !f.isHidden()) {
+            if (f.isAdded() && !f.isHidden() && f.getUserVisibleHint()) {
                 Fragment tTopFragment = getTopFragment(f.getChildFragmentManager());
                 return tTopFragment == null ? f : tTopFragment;
             }
