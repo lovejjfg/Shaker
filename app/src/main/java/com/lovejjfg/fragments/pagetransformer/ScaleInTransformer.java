@@ -3,10 +3,11 @@ package com.lovejjfg.fragments.pagetransformer;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 public class ScaleInTransformer extends BasePageTransformer {
-    private static final float DEFAULT_MIN_SCALE = 0.6f;
+    private static final float DEFAULT_MIN_SCALE = 0.8f;
     private float mMinScale = DEFAULT_MIN_SCALE;
 
     public ScaleInTransformer() {
@@ -30,6 +31,7 @@ public class ScaleInTransformer extends BasePageTransformer {
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void pageTransform(View view, float position) {
+        Log.e("TAG", "pageTransform: view:" + view.toString() + ";position::" + position);
         int pageWidth = view.getWidth();
         int pageHeight = view.getHeight();
 

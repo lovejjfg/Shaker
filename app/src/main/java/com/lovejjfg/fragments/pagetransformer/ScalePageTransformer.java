@@ -5,7 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by HanHailong on 15/9/27.
@@ -21,8 +20,10 @@ public class ScalePageTransformer implements ViewPager.PageTransformer {
     }
 
     @Override
-    public void transformPage(View page, float position) {
-        Log.e(TAG, "transformPage: " + position);
+    public void transformPage(View view, float position) {
+//        Log.e(TAG, "transformPage: " + position);
+        Log.e("TAG", "pageTransform: view:" + view.toString() + ";position::" + position);
+
         if (position < -1) {
             position = -1;
         } else if (position > 1) {
@@ -34,12 +35,12 @@ public class ScalePageTransformer implements ViewPager.PageTransformer {
         float slope = (MAX_SCALE - MIN_SCALE) / 1;//0.6
         //一个公式
         float scaleValue = MIN_SCALE + tempScale * slope;
-        page.setScaleX(scaleValue);
-        page.setScaleY(scaleValue);
+        view.setScaleX(scaleValue);
+        view.setScaleY(scaleValue);
 //        mViewPager.setPageMargin((int) (10*scaleValue));
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            page.getParent().requestLayout();
+            view.getParent().requestLayout();
         }
     }
 }

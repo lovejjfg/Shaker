@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.lovejjfg.sview.SupportFragment;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,7 +41,7 @@ public class Fragment11 extends SupportFragment {
         return fragment;
     }
 
-    @Bind(R.id.text)
+    @BindView(R.id.text)
     TextView mText;
 
     @Override

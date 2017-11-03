@@ -13,7 +13,8 @@ import android.widget.TextView;
 
 import com.lovejjfg.sview.SupportFragment;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -45,11 +46,11 @@ public class Fragment2 extends SupportFragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Bind(R.id.tab1)
+    @BindView(R.id.tab1)
     TextView tv1;
-    @Bind(R.id.tab2)
+    @BindView(R.id.tab2)
     TextView tv2;
-    @Bind(R.id.tab3)
+    @BindView(R.id.tab3)
     TextView tv3;
     private SupportFragment f4;
     private SupportFragment f5;

@@ -13,20 +13,22 @@ import android.widget.ImageView;
 public class ImagePagerAdapter extends PagerAdapter {
     //        private final ArrayList<Fragment> list;
     private static final int[] imgRes = {
-            R.mipmap.style_dny,
-            R.mipmap.style_dzh,
-            R.mipmap.style_jianyue,
-            R.mipmap.style_meishi,
-            R.mipmap.style_oushi,
-            R.mipmap.style_rishi,
-            R.mipmap.style_xiandai,
-            R.mipmap.style_zhongshi
+            R.mipmap.a,
+//            R.mipmap.style_dzh,
+//            R.mipmap.style_jianyue,
+//            R.mipmap.style_meishi,
+//            R.mipmap.style_oushi,
+//            R.mipmap.style_rishi,
+//            R.mipmap.style_xiandai,
+//            R.mipmap.style_zhongshi
     };
+
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView view = new ImageView(container.getContext());
-        view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        view.setImageResource(imgRes[position % imgRes.length]);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        view.setScaleType(ImageView.ScaleType.FIT_XY);
+        view.setImageResource(R.mipmap.a);
         container.addView(view);
         return view;
     }

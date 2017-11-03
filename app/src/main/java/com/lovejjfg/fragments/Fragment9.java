@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.lovejjfg.sview.SupportFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -41,8 +40,9 @@ public class Fragment9 extends SupportFragment {
         return fragment;
     }
 
-    @Bind(R.id.text)
+    @BindView(R.id.text)
     TextView mText;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class Fragment9 extends SupportFragment {
     @OnClick(R.id.bt_next)
     public void onClick(View v) {
         Log.e(TAG, "onClick: " + v.getId());
-        addToShow(this,Fragment10.newInstance());
+        addToShow(this, Fragment10.newInstance());
     }
 
 }

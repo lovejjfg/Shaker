@@ -1,23 +1,20 @@
 package com.lovejjfg.fragments;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.lovejjfg.fragments.model.ModelBean;
 import com.lovejjfg.fragments.pagetransformer.ScaleInTransformer;
-import com.lovejjfg.fragments.pagetransformer.ScalePageTransformer;
 import com.lovejjfg.sview.SupportFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -49,8 +46,10 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ViewPager mViewPager;
+    @BindView(R.id.activity_main2)
+    ViewGroup mContainer;
 
     @Override
     public void onAttach(Context context) {
@@ -66,11 +65,17 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
 
         View rootView = inflater.inflate(R.layout.fragment_1, container, false);
         ButterKnife.bind(this, rootView);
+        mContainer.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mViewPager.onTouchEvent(event);
+            }
+        });
         mViewPager.setAdapter(new ImagePagerAdapter());
 //        pageTransformer = new ScalePageTransformer(mViewPager);
         ScaleInTransformer scaleInTransformer = new ScaleInTransformer();
         mViewPager.setPageMargin(20);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setPageTransformer(false, scaleInTransformer);
 
         mViewPager.setCurrentItem(5);

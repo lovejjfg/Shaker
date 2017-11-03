@@ -20,7 +20,8 @@ import com.lovejjfg.sview.SupportFragment;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -56,14 +57,14 @@ public class Fragment3 extends SupportFragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Bind(R.id.tab)
+    @BindView(R.id.tab)
     TabLayout mTab;
-    @Bind(R.id.view_pager)
+    @BindView(R.id.view_pager)
     ScrollAbleViewPager mViewPager;
 
-    @Bind(R.id.ts)
+    @BindView(R.id.ts)
     CurveView mCurveView;
-    @Bind(R.id.bottom_sheet)
+    @BindView(R.id.bottom_sheet)
     CurveLayout mBoottom;
     private int mCurveViewHeight;
 

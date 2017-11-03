@@ -10,7 +10,8 @@ import android.widget.ViewFlipper;
 
 import com.lovejjfg.sview.SupportFragment;
 
-import butterknife.Bind;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -43,7 +44,7 @@ public class Fragment8 extends SupportFragment implements View.OnClickListener {
         return fragment;
     }
 
-    @Bind(R.id.flipper)
+    @BindView(R.id.flipper)
     ViewFlipper flipper;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
