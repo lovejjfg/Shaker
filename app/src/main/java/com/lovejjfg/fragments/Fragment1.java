@@ -74,7 +74,7 @@ public class Fragment1 extends SupportFragment implements View.OnClickListener {
         mViewPager.setAdapter(new ImagePagerAdapter());
 //        pageTransformer = new ScalePageTransformer(mViewPager);
         ScaleInTransformer scaleInTransformer = new ScaleInTransformer();
-        mViewPager.setPageMargin(20);
+        mViewPager.setPageMargin(-20);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setPageTransformer(false, scaleInTransformer);
 
