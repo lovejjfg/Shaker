@@ -25,11 +25,13 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':SViewLibrary')
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
+    compile project(':shake')
+    //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    //        exclude group: 'com.android.support', module: 'support-annotations'
+    //    })
     compile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
     testCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
     androidTestCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"

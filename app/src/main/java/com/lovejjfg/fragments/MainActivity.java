@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
-import com.lovejjfg.sview.utils.ShakeHelper;
+import com.lovejjfg.shake.ShakerHelper;
+import com.lovejjfg.shake.Shaker;
 import com.lovejjfg.sview.SupportActivity;
 
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ public class MainActivity extends SupportActivity {
     private static final String T3 = "T3";
     private static final String CURRENT_TAG = "CURRENT_TAG";
     private static final String TAG = "MainActivity";
-    private ShakeHelper shakeHelper;
+    private Shaker shakeHelper;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -27,7 +28,7 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        shakeHelper = ShakeHelper.initShakeHelper(this);
+        shakeHelper = ShakerHelper.init(this);
 
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");

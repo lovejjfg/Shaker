@@ -11,5 +11,16 @@
     <color name="text_tertiary_dark">#61000000</color> <!-- 38% -->
 
     <color name="uc_blue">#FF51ABE2</color>
+    <color name="theme_color_text">#333333</color>
+    <color name="color_white">#ffffff</color>
+    <color name="theme_color_text_g0">#4e4e4e</color>
+    <color name="theme_color_text_g1">#b0b0b0</color>
+    <color name="theme_color_text_g2">#656565</color>
+    <color name="theme_color_text_g3">#404040</color>
+    <color name="theme_color_text_g4">#707070</color>
+    <color name="theme_color_text_g5">#b4b4b4</color>
+    <color name="theme_color_text_g6">#4c4c4c</color>
+    <color name="theme_color_divider">#eeeeee</color>
+    <color name="trans_primary">#cc2c4856</color>
 
 </resources>

@@ -33,6 +33,11 @@
     <!--android:layout_height="0dp"-->
     <!--android:layout_weight="1"-->
     <!--tools:layout="@layout/activity_main"/>-->
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:name="com.lovejjfg.fragments.widget.NormalFragment1"
+        />
 
     <fragment
         android:name="com.lovejjfg.fragments.Fragment2"

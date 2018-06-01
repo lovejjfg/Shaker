@@ -9,9 +9,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.lovejjfg.shake.Shaker;
+import com.lovejjfg.shake.ShakerHelper;
 
 public class Main2Activity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -22,20 +24,38 @@ public class Main2Activity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private Shaker shakerHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        shakerHelper = ShakerHelper.init(this);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
+            getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+            R.id.navigation_drawer,
+            (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //shakeHelper.onPause();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        shakerHelper.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -43,8 +63,8 @@ public class Main2Activity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+            .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+            .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -95,7 +115,7 @@ public class Main2Activity extends Activity
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main2, container, false);
             return rootView;
         }
@@ -104,8 +124,7 @@ public class Main2Activity extends Activity
         public void onAttach(Activity activity) {
             super.onAttach(activity);
             ((Main2Activity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
+                getArguments().getInt(ARG_SECTION_NUMBER));
         }
     }
-
 }

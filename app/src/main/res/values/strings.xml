@@ -52,7 +52,7 @@
 	"sImgUrl":"这是URL"
 }</string>
 
-        <string name="large_text">
+    <string name="large_text">
         "Material is the metaphor.\n\n"
 
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
@@ -142,4 +142,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="space">&#160;&#160;&#160;&#160;</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="title_activity_main3">Main3Activity</string>
 </resources>
