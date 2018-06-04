@@ -5,7 +5,7 @@ package com.lovejjfg.shake;
  * Email: lovejjfg@gmail.com
  */
 public interface Shaker {
-    void onStart();
+    void onResume();
 
-    void onPause();
+    void onStop();
 }

@@ -90,7 +90,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         fragmentHandlers = Collections.unmodifiableList(list);
     }
 
-    public static void setEnable(boolean enable, ShakerCallback callback) {
+    public static void init(boolean enable, @Nullable ShakerCallback callback) {
         isEnable = enable;
         if (enable && callback != null) {
             shakerCallback = callback;
@@ -99,13 +99,17 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         }
     }
 
+    public static void init(boolean enable) {
+        init(enable, null);
+    }
+
     @NonNull
-    public static Shaker init(Activity context) {
+    public static Shaker instance(Activity context) {
         return new ShakerHelper(context);
     }
 
     @Override
-    public void onStart() {
+    public void onResume() {
         if (!isEnable) {
             return;
         }
@@ -119,7 +123,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     @Override
-    public void onPause() {
+    public void onStop() {
         if (!isEnable) {
             return;
         }

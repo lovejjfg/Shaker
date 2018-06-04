@@ -30,7 +30,7 @@ public class Main2Activity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        shakerHelper = ShakerHelper.init(this);
+        shakerHelper = ShakerHelper.instance(this);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
             getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -42,15 +42,15 @@ public class Main2Activity extends Activity
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        //shakeHelper.onPause();
+    protected void onStop() {
+        super.onStop();
+        shakerHelper.onStop();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        shakerHelper.onStart();
+    protected void onResume() {
+        super.onResume();
+        shakerHelper.onResume();
     }
 
     @Override

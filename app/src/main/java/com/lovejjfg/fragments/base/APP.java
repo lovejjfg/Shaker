@@ -30,7 +30,7 @@ public class APP extends Application {
         }
         LeakCanary.install(this);
         // Normal app init code...
-        ShakerHelper.setEnable(true, new ShakerCallback() {
+        ShakerHelper.init(true, new ShakerCallback() {
             @Override
             public List<Class> ignoreFragments() {
                 //ArrayList<Class> classes = new ArrayList<>();

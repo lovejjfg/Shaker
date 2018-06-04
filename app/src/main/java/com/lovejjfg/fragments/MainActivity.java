@@ -28,7 +28,7 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        shakeHelper = ShakerHelper.init(this);
+        shakeHelper = ShakerHelper.instance(this);
 
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
@@ -39,16 +39,16 @@ public class MainActivity extends SupportActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         //获取 SensorManager 负责管理传感器
-        shakeHelper.onStart();
+        shakeHelper.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        shakeHelper.onPause();
+        shakeHelper.onStop();
     }
 
     @Override
