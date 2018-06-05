@@ -1,16 +1,12 @@
 package com.lovejjfg.fragments;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
-
-import com.lovejjfg.shake.ShakerHelper;
-import com.lovejjfg.shake.Shaker;
-import com.lovejjfg.sview.SupportActivity;
-
 import butterknife.ButterKnife;
-
+import com.lovejjfg.shake.Shaker;
+import com.lovejjfg.shake.ShakerHelper;
+import com.lovejjfg.sview.ScreenShotListenManager;
+import com.lovejjfg.sview.SupportActivity;
 
 public class MainActivity extends SupportActivity {
 
@@ -20,16 +16,14 @@ public class MainActivity extends SupportActivity {
     private static final String CURRENT_TAG = "CURRENT_TAG";
     private static final String TAG = "MainActivity";
     private Shaker shakeHelper;
+    private ScreenShotListenManager shotListenManager;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         shakeHelper = ShakerHelper.instance(this);
-
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
@@ -73,5 +67,4 @@ public class MainActivity extends SupportActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 }

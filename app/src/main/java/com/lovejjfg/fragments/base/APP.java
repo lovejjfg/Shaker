@@ -1,17 +1,13 @@
 package com.lovejjfg.fragments.base;
 
-import android.app.Activity;
 import android.app.Application;
-import android.content.DialogInterface;
-import android.hardware.SensorEvent;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
+import android.support.annotation.Nullable;
 import com.lovejjfg.fragments.R;
-import com.lovejjfg.shake.FragmentsHandler;
-import com.lovejjfg.shake.ShakerCallback;
+import com.lovejjfg.fragments.debug.Main3Activity;
+import com.lovejjfg.shake.DefaultShakerCallback;
 import com.lovejjfg.shake.ShakerHelper;
 import com.squareup.leakcanary.LeakCanary;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,48 +26,19 @@ public class APP extends Application {
         }
         LeakCanary.install(this);
         // Normal app init code...
-        ShakerHelper.init(true, new ShakerCallback() {
+
+        ShakerHelper.init(true, new DefaultShakerCallback() {
+            @Nullable
             @Override
-            public List<Class> ignoreFragments() {
-                //ArrayList<Class> classes = new ArrayList<>();
-                //classes.add(Fragment5.class);
-                return null;
+            public List<Class> disableActivities() {
+                ArrayList<Class> classes = new ArrayList<>();
+                classes.add(Main3Activity.class);
+                return classes;
             }
 
             @Override
             public int initHintViewLayout() {
-                return 0;
-            }
-
-            @Override
-            public void onHintViewInflated(final DialogInterface dialogInterface, View view) {
-                view.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialogInterface.dismiss();
-                    }
-                });
-            }
-
-            @Override
-            public boolean onSenseChanged(SensorEvent event) {
-                return false;
-            }
-
-            @Override
-            public List<FragmentsHandler> fragmentHandlers() {
-                return null;
-            }
-
-            @Override
-            public void onDismiss(@NonNull Activity context, DialogInterface dialog) {
-                Log.e("TAG", "onDismiss: ......");
+                return R.layout.dialog_shake;
             }
         });
     }
