@@ -47,17 +47,31 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private static ShakerCallback shakerCallback;
     private View customView;
     private List<FragmentsHandler> fragmentHandlers;
+    private boolean isIgnore = false;
 
-    private ShakerHelper(Activity context) {
+    private ShakerHelper(@NonNull Activity context) {
         if (!isEnable) {
             return;
         }
-        this.context = context;
-        initHandlers();
-        initDialog(context);
+        isIgnore = checkIsIgnore(context);
+        if (!isIgnore) {
+            this.context = context;
+            initHandlers();
+            initDialog(context);
+        }
     }
 
-    private void initDialog(Activity context) {
+    private boolean checkIsIgnore(@NonNull Activity context) {
+        if (shakerCallback != null) {
+            List<Class> activities = shakerCallback.disableActivities();
+            if (activities != null && !activities.isEmpty()) {
+                return activities.contains(context.getClass());
+            }
+        }
+        return false;
+    }
+
+    private void initDialog(@NonNull Activity context) {
         dialog = new AlertDialog.Builder(context).create();
         customView = null;
         if (shakerCallback != null) {
@@ -115,6 +129,13 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         if (!isEnable) {
             return;
         }
+        if (isIgnore) {
+            return;
+        }
+        registerSensor();
+    }
+
+    private void registerSensor() {
         mSensorManager = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE));
         if (isEnable && mSensorManager != null) {
             Sensor mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -129,6 +150,10 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         if (!isEnable) {
             return;
         }
+        unRegisterSensor();
+    }
+
+    private void unRegisterSensor() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
             mSensorManager = null;
