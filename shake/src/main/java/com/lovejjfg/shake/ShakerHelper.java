@@ -63,10 +63,12 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         if (shakerCallback != null) {
             try {
                 int resource = shakerCallback.initHintViewLayout();
-                customView = LayoutInflater.from(context)
-                    .inflate(resource, (ViewGroup) context
-                        .getWindow().getDecorView(), false);
-                shakerCallback.onHintViewInflated(dialog, customView);
+                if (resource != 0 && resource != -1) {
+                    customView = LayoutInflater.from(context)
+                        .inflate(resource, (ViewGroup) context
+                            .getWindow().getDecorView(), false);
+                    shakerCallback.onHintViewInflated(dialog, customView);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,6 +100,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         }
     }
 
+    @SuppressWarnings("unused")
     public static void init(boolean enable) {
         init(enable, null);
     }
