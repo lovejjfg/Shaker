@@ -1,18 +1,21 @@
 
 
-### 最终效果图：
+### Shaker
 
-![pullRefresh](https://github.com/lovejjfg/screenshort/blob/master/PullRefreshfinal.gif?raw=true)
 
-### 相关原理实现
+[ ![Download](https://api.bintray.com/packages/lovejjfg/maven/Shaker/images/download.svg) ](https://bintray.com/lovejjfg/maven/Shaker/_latestVersion)
+* 弹窗 UI 可定制化
+* 摇一摇触发条件可定制化
+* 过滤 Fragment 逻辑可定制化
 
-[1、圆球动画相关实现](http://www.jianshu.com/p/98bb533afa9c)
 
-[2、下拉刷新实现](http://www.jianshu.com/p/0b39e255b2fc)
 
-[3、首页展开关闭效果实现](http://www.jianshu.com/p/528360d9ed95)
+![默认弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/aa2e12360fc949b835c1fd05198e4f0d93a23319/WechatIMG292.jpeg)
 
-### 更多的自定义效果
+![定制弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/aa2e12360fc949b835c1fd05198e4f0d93a23319/WechatIMG291.jpeg)
 
-[其他自定义效果](https://github.com/lovejjfg/Circle)
+
+
+
+
 
