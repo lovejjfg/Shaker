@@ -47,7 +47,6 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private static ShakerCallback shakerCallback;
     private View customView;
     private List<FragmentsHandler> fragmentHandlers;
-    //    private android.app.FragmentManager fragmentManager;
 
     private ShakerHelper(Activity context) {
         if (!isEnable) {

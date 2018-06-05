@@ -9,10 +9,9 @@
 * 过滤 Fragment 逻辑可定制化
 
 
+![定制弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/8653ede91bd3f8979e33760f314414035eb8dc29/WechatIMG291.jpeg)
+![默认弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/8653ede91bd3f8979e33760f314414035eb8dc29/WechatIMG292.jpeg)
 
-![默认弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/aa2e12360fc949b835c1fd05198e4f0d93a23319/WechatIMG292.jpeg)
-
-![定制弹窗效果](https://raw.githubusercontent.com/lovejjfg/screenshort/aa2e12360fc949b835c1fd05198e4f0d93a23319/WechatIMG291.jpeg)
 
 
 
