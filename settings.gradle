@@ -1,1 +1,1 @@
-include ':app', ':SViewLibrary', ':shake'
+include ':app', ':SViewLibrary', ':shake',':shake-no-op'

@@ -1,5 +1,6 @@
 package com.lovejjfg.fragments;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import butterknife.ButterKnife;
@@ -35,7 +36,6 @@ public class MainActivity extends SupportActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //获取 SensorManager 负责管理传感器
         shakeHelper.onResume();
     }
 

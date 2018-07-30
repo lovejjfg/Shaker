@@ -351,7 +351,7 @@ public class CurveLayout extends FrameLayout {
                    but in this case, animate to it */
                 applySheetInitialHeightOffset(true, oldTop - sheetExpandedTop);
             }
-//            init();
+//            setCallback();
             Log.e(TAG, "onLayoutChange: 布局变化了！！" + sheet.getTop());
         }
     };

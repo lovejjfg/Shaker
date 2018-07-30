@@ -25,6 +25,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,20 +40,19 @@ import java.util.List;
  */
 
 public class ShakerHelper implements SensorEventListener, DialogInterface.OnDismissListener, Shaker {
+    private static final String TAG = Shaker.class.getSimpleName();
+    private static final String CONTENT_TAG = "shaker_content";
     private AlertDialog dialog;
     private Activity context;
     private SensorManager mSensorManager;
-    private static boolean isEnable = true;
     @Nullable
     private static ShakerCallback shakerCallback;
     private View customView;
     private List<FragmentsHandler> fragmentHandlers;
-    private boolean isIgnore = false;
+    private boolean isIgnore;
 
+    //todo consider to replace with LifecycleObserver
     private ShakerHelper(@NonNull Activity context) {
-        if (!isEnable) {
-            return;
-        }
         isIgnore = checkIsIgnore(context);
         if (!isIgnore) {
             this.context = context;
@@ -72,6 +72,9 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     private void initDialog(@NonNull Activity context) {
+        if (dialog != null) {
+            return;
+        }
         dialog = new AlertDialog.Builder(context).create();
         customView = null;
         if (shakerCallback != null) {
@@ -105,18 +108,15 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         fragmentHandlers = Collections.unmodifiableList(list);
     }
 
-    public static void init(boolean enable, @Nullable ShakerCallback callback) {
-        isEnable = enable;
-        if (enable && callback != null) {
+    public static void setCallback(@Nullable ShakerCallback callback) {
+        if (shakerCallback != null) {
+            Log.e(TAG, "Shaker should be setCallback just once ");
+        }
+        if (callback != null) {
             shakerCallback = callback;
         } else {
             shakerCallback = null;
         }
-    }
-
-    @SuppressWarnings("unused")
-    public static void init(boolean enable) {
-        init(enable, null);
     }
 
     @NonNull
@@ -126,9 +126,6 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     @Override
     public void onResume() {
-        if (!isEnable) {
-            return;
-        }
         if (isIgnore) {
             return;
         }
@@ -137,7 +134,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     private void registerSensor() {
         mSensorManager = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE));
-        if (isEnable && mSensorManager != null) {
+        if (mSensorManager != null) {
             Sensor mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (mAccelerometerSensor != null) {
                 mSensorManager.registerListener(this, mAccelerometerSensor, SensorManager.SENSOR_DELAY_UI);
@@ -147,9 +144,6 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     @Override
     public void onStop() {
-        if (!isEnable) {
-            return;
-        }
         unRegisterSensor();
     }
 
@@ -205,7 +199,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     private void setContent(CharSequence charSequence) {
         if (customView != null) {
-            TextView content = customView.findViewWithTag("shaker_content");
+            TextView content = customView.findViewWithTag(CONTENT_TAG);
             throughOrThrow(content);
             content.setText(charSequence);
         } else {
@@ -221,7 +215,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        if (isEnable && shakerCallback != null) {
+        if (shakerCallback != null) {
             shakerCallback.onDismiss(context, dialog);
         }
     }

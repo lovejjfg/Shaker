@@ -22,13 +22,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':SViewLibrary')
-    compile project(':shake')
+    compile project(':shake-no-op')
+//    compile project(':shake')
     //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     //        exclude group: 'com.android.support', module: 'support-annotations'
     //    })

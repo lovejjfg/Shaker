@@ -1,7 +1,6 @@
 package com.lovejjfg.fragments.base;
 
 import android.app.Application;
-import android.support.annotation.Nullable;
 import com.lovejjfg.fragments.R;
 import com.lovejjfg.fragments.debug.Main3Activity;
 import com.lovejjfg.shake.DefaultShakerCallback;
@@ -21,14 +20,13 @@ public class APP extends Application {
         super.onCreate();
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
+            // You should not setCallback your app in this process.
             return;
         }
         LeakCanary.install(this);
-        // Normal app init code...
+        // Normal app setCallback code...
 
-        ShakerHelper.init(true, new DefaultShakerCallback() {
-            @Nullable
+        ShakerHelper.setCallback(new DefaultShakerCallback() {
             @Override
             public List<Class> disableActivities() {
                 ArrayList<Class> classes = new ArrayList<>();
