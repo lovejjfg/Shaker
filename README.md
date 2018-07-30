@@ -2,8 +2,12 @@
 
 ### Shaker
 
-
 [ ![Download](https://api.bintray.com/packages/lovejjfg/maven/Shaker/images/download.svg) ](https://bintray.com/lovejjfg/maven/Shaker/_latestVersion)
+
+    dependencies {
+     debugImplementation 'com.lovejjfg:shake:0.0.4'
+     releaseImplementation 'com.lovejjfg:shake-no-op:0.0.4'
+    }
 
 Shaker is a debug util that you can through shake to show current Activity and it's Fragment name in a dialog.so that you can fast location the views.
 It support some features:
