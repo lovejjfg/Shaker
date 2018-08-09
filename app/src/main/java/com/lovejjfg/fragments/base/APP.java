@@ -1,6 +1,8 @@
 package com.lovejjfg.fragments.base;
 
 import android.app.Application;
+import android.content.DialogInterface;
+import android.view.View;
 import com.lovejjfg.fragments.R;
 import com.lovejjfg.fragments.debug.Main3Activity;
 import com.lovejjfg.shake.DefaultShakerCallback;
@@ -37,6 +39,16 @@ public class APP extends Application {
             @Override
             public int initHintViewLayout() {
                 return R.layout.dialog_shake;
+            }
+
+            @Override
+            public void onHintViewInflated(final DialogInterface dialog, View view) {
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
         });
     }

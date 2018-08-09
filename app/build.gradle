@@ -29,8 +29,8 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':SViewLibrary')
-    compile project(':shake-no-op')
-//    compile project(':shake')
+    debugImplementation 'com.lovejjfg:shake:0.0.4'
+    releaseImplementation 'com.lovejjfg:shake-no-op:0.0.4'
     //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     //        exclude group: 'com.android.support', module: 'support-annotations'
     //    })
