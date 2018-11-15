@@ -17,12 +17,14 @@ package com.lovejjfg.shake;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -32,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,7 +54,6 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private List<FragmentsHandler> fragmentHandlers;
     private boolean isIgnore;
 
-    //todo consider to replace with LifecycleObserver
     private ShakerHelper(@NonNull Activity context) {
         isIgnore = checkIsIgnore(context);
         if (!isIgnore) {
@@ -108,7 +110,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         fragmentHandlers = Collections.unmodifiableList(list);
     }
 
-    public static void setCallback(@Nullable ShakerCallback callback) {
+    private static void setCallback(@Nullable ShakerCallback callback) {
         if (shakerCallback != null) {
             Log.e(TAG, "Shaker should be setCallback just once ");
         }
@@ -120,7 +122,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     @NonNull
-    public static Shaker instance(Activity context) {
+    private static Shaker instance(Activity context) {
         return new ShakerHelper(context);
     }
 
@@ -217,6 +219,71 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     public void onDismiss(DialogInterface dialog) {
         if (shakerCallback != null) {
             shakerCallback.onDismiss(context, dialog);
+        }
+    }
+
+    private static final HashMap<String, Shaker> SHAKER_HELPER = new HashMap<>();
+    private static final LifeCycleCallback LIFE_CYCLE_CALLBACK = new LifeCycleCallback();
+    private static boolean isFirst = true;
+
+    public static synchronized void init(@NonNull Application app, @Nullable ShakerCallback shakerCallback) {
+        if (isFirst) {
+            isFirst = false;
+            setCallback(shakerCallback);
+            app.registerActivityLifecycleCallbacks(LIFE_CYCLE_CALLBACK);
+        }
+    }
+
+    private static String createKey(Activity activity) {
+        return activity.getClass().getName();
+    }
+
+    private static class LifeCycleCallback implements Application.ActivityLifecycleCallbacks {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            Log.e(TAG, "onActivityCreated: " + activity.getClass().getName());
+            SHAKER_HELPER.put(activity.getClass().getName(), ShakerHelper.instance(activity));
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+            String name = createKey(activity);
+            Shaker shaker = SHAKER_HELPER.get(name);
+            if (shaker == null) {
+                shaker = ShakerHelper.instance(activity);
+                SHAKER_HELPER.put(name, shaker);
+            }
+            shaker.onResume();
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+            String name = createKey(activity);
+            Shaker shaker = SHAKER_HELPER.get(name);
+            if (shaker != null) {
+                shaker.onStop();
+            }
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+            String name = createKey(activity);
+            SHAKER_HELPER.remove(name);
         }
     }
 }

@@ -15,7 +15,7 @@
  */
 package com.lovejjfg.shake;
 
-import android.app.Activity;
+import android.app.Application;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -24,21 +24,8 @@ import android.support.annotation.Nullable;
  * Email lovejjfg@gmail.com
  */
 
-public class ShakerHelper implements Shaker {
+public class ShakerHelper {
 
-    public static void setCallback(@Nullable ShakerCallback callback) {
-    }
-
-    @NonNull
-    public static Shaker instance(Activity context) {
-        return new ShakerHelper();
-    }
-
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onStop() {
+    public static void init(@NonNull Application app, @Nullable ShakerCallback shakerCallback) {
     }
 }
