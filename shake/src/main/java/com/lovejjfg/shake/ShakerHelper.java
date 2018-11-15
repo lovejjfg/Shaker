@@ -145,7 +145,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     @Override
-    public void onStop() {
+    public void onPaused() {
         unRegisterSensor();
     }
 
@@ -263,16 +263,16 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
         @Override
         public void onActivityPaused(Activity activity) {
-
+            String name = createKey(activity);
+            Shaker shaker = SHAKER_HELPER.get(name);
+            if (shaker != null) {
+                shaker.onPaused();
+            }
         }
 
         @Override
         public void onActivityStopped(Activity activity) {
-            String name = createKey(activity);
-            Shaker shaker = SHAKER_HELPER.get(name);
-            if (shaker != null) {
-                shaker.onStop();
-            }
+
         }
 
         @Override

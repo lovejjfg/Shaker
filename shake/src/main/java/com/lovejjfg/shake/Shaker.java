@@ -7,5 +7,5 @@ package com.lovejjfg.shake;
 interface Shaker {
     void onResume();
 
-    void onStop();
+    void onPaused();
 }
