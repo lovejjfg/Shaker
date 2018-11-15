@@ -1,14 +1,12 @@
 package com.lovejjfg.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
 import com.lovejjfg.sview.SupportFragment;
-
 
 /**
  * Created by Joe on 2016-06-09
@@ -24,7 +22,6 @@ public class Fragment6 extends SupportFragment implements View.OnClickListener {
     public Fragment6() {
     }
 
-
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -37,17 +34,22 @@ public class Fragment6 extends SupportFragment implements View.OnClickListener {
         return fragment;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_6, container, false);
+        rootView.setOnClickListener(this);
         return rootView;
     }
 
     @Override
     public void onClick(View v) {
         Log.e(TAG, "onClick:fragment6 " + v.getId());
+        try {
+            getActivity().startActivity(new Intent(getContext(), Main2Activity.class));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

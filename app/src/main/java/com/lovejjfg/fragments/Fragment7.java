@@ -1,21 +1,16 @@
 package com.lovejjfg.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewFlipper;
-
-
-import com.lovejjfg.sview.SupportFragment;
-
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.ContentValues.TAG;
+import com.lovejjfg.sview.SupportFragment;
 
 /**
  * Created by Joe on 2016-06-09
@@ -31,11 +26,9 @@ public class Fragment7 extends SupportFragment implements View.OnClickListener {
     public Fragment7() {
     }
 
-
     /**
      * Returns a new instance of this fragment for the given section
      * number.
-     * @param sectionNumber
      */
     public static Fragment7 newInstance(String sectionNumber) {
         Fragment7 fragment = new Fragment7();
@@ -50,21 +43,24 @@ public class Fragment7 extends SupportFragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_7, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
     }
 
-    @OnClick({R.id.bt_1, R.id.bt_2, R.id.bt_3, R.id.bt_4})
-    void click() {
-        flipper.showNext();
+    @OnClick({ R.id.bt_1, R.id.bt_2, R.id.bt_3, R.id.bt_4 })
+    void click(View view) {
+        if (view.getId() == R.id.bt_1) {
+            startActivity(new Intent(getContext(), Main2Activity.class));
+        } else {
+            flipper.showNext();
+        }
     }
 
     @Override
     public void onClick(View v) {
         Log.e(TAG, "onClick: " + v.getId());
     }
-
 }

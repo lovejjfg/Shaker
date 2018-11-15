@@ -1,11 +1,8 @@
 package com.lovejjfg.fragments;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import butterknife.ButterKnife;
-import com.lovejjfg.shake.Shaker;
-import com.lovejjfg.shake.ShakerHelper;
 import com.lovejjfg.sview.ScreenShotListenManager;
 import com.lovejjfg.sview.SupportActivity;
 
@@ -16,7 +13,6 @@ public class MainActivity extends SupportActivity {
     private static final String T3 = "T3";
     private static final String CURRENT_TAG = "CURRENT_TAG";
     private static final String TAG = "MainActivity";
-    private Shaker shakeHelper;
     private ScreenShotListenManager shotListenManager;
 
     @Override
@@ -24,7 +20,6 @@ public class MainActivity extends SupportActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        shakeHelper = ShakerHelper.instance(this);
 
         Log.e(TAG, "onSaveInstanceState: 当前没有相关状态！！");
         if (savedInstanceState == null) {
@@ -36,13 +31,11 @@ public class MainActivity extends SupportActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        shakeHelper.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        shakeHelper.onStop();
     }
 
     @Override

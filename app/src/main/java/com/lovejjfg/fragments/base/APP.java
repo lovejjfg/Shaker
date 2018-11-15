@@ -6,6 +6,7 @@ import android.view.View;
 import com.lovejjfg.fragments.R;
 import com.lovejjfg.fragments.debug.Main3Activity;
 import com.lovejjfg.shake.DefaultShakerCallback;
+import com.lovejjfg.shake.FragmentsHandler;
 import com.lovejjfg.shake.ShakerHelper;
 import com.squareup.leakcanary.LeakCanary;
 import java.util.ArrayList;
@@ -27,13 +28,17 @@ public class APP extends Application {
         }
         LeakCanary.install(this);
         // Normal app setCallback code...
-
-        ShakerHelper.setCallback(new DefaultShakerCallback() {
+        ShakerHelper.init(this, new DefaultShakerCallback() {
             @Override
             public List<Class> disableActivities() {
                 ArrayList<Class> classes = new ArrayList<>();
                 classes.add(Main3Activity.class);
                 return classes;
+            }
+
+            @Override
+            public List<FragmentsHandler> fragmentHandlers() {
+                return super.fragmentHandlers();
             }
 
             @Override

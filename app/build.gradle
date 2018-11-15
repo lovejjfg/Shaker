@@ -27,42 +27,43 @@ android {
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':SViewLibrary')
-    debugImplementation 'com.lovejjfg:shake:0.0.4'
-    releaseImplementation 'com.lovejjfg:shake-no-op:0.0.4'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':SViewLibrary')
+    implementation 'com.lovejjfg:shake:0.0.5'
+    implementation 'com.lovejjfg:shake-no-op:0.0.5'
+
     //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     //        exclude group: 'com.android.support', module: 'support-annotations'
     //    })
-    compile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
-    testCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
+    implementation "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
+    testImplementation "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
     androidTestCompile "com.android.support:support-annotations:${SUPPORT_V7_VERSION}"
-    compile "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
-    compile "com.android.support:cardview-v7:${SUPPORT_V7_VERSION}"
-    compile "com.android.support:design:${SUPPORT_V7_VERSION}"
-    compile "com.android.support:recyclerview-v7:${SUPPORT_V7_VERSION}"
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation "com.android.support:appcompat-v7:${SUPPORT_V7_VERSION}"
+    implementation "com.android.support:cardview-v7:${SUPPORT_V7_VERSION}"
+    implementation "com.android.support:design:${SUPPORT_V7_VERSION}"
+    implementation "com.android.support:recyclerview-v7:${SUPPORT_V7_VERSION}"
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.lovejjfg.powerrecycle:powerrecycle:1.0.0'
+    implementation 'com.lovejjfg.powerrecycle:powerrecycle:1.0.0'
 
-    compile 'com.google.code.gson:gson:2.4'
+    implementation 'com.google.code.gson:gson:2.4'
 
     //leakcanary
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 
     //  Robolectric
-    testCompile "org.robolectric:robolectric:3.1.2"
+    testImplementation "org.robolectric:robolectric:3.1.2"
 
     //  AssertJ
-    testCompile 'com.squareup.assertj:assertj-android:1.1.0'
+    testImplementation 'com.squareup.assertj:assertj-android:1.1.0'
 
     //  PowerMock + Mockito
-    testCompile 'org.powermock:powermock-module-junit4:1.6.5'
-    testCompile "org.powermock:powermock-module-junit4-rule:1.6.5"
-    testCompile 'org.powermock:powermock-api-mockito:1.6.5'
-    testCompile "org.powermock:powermock-classloading-xstream:1.6.5"
+    testImplementation 'org.powermock:powermock-module-junit4:1.6.5'
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
+    testImplementation 'org.powermock:powermock-api-mockito:1.6.5'
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.5"
 }
