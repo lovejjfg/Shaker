@@ -8,4 +8,6 @@ interface Shaker {
     void onResume();
 
     void onPaused();
+
+    void onDestroy();
 }

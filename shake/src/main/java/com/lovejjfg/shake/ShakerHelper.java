@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private static final String TAG = Shaker.class.getSimpleName();
     private static final String CONTENT_TAG = "shaker_content";
     private AlertDialog dialog;
-    private Activity context;
+    private WeakReference<Activity> contextReference;
     private SensorManager mSensorManager;
     @Nullable
     private static ShakerCallback shakerCallback;
@@ -57,7 +58,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private ShakerHelper(@NonNull Activity context) {
         isIgnore = checkIsIgnore(context);
         if (!isIgnore) {
-            this.context = context;
+            this.contextReference = new WeakReference<>(context);
             initHandlers();
             initDialog(context);
         }
@@ -135,7 +136,13 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     private void registerSensor() {
-        mSensorManager = ((SensorManager) context.getSystemService(Context.SENSOR_SERVICE));
+        if (mSensorManager == null) {
+            Activity activity = contextReference.get();
+            if (activity == null) {
+                return;
+            }
+            mSensorManager = ((SensorManager) activity.getSystemService(Context.SENSOR_SERVICE));
+        }
         if (mSensorManager != null) {
             Sensor mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             if (mAccelerometerSensor != null) {
@@ -149,10 +156,15 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         unRegisterSensor();
     }
 
+    @Override
+    public void onDestroy() {
+        unRegisterSensor();
+        mSensorManager = null;
+    }
+
     private void unRegisterSensor() {
         if (mSensorManager != null) {
             mSensorManager.unregisterListener(this);
-            mSensorManager = null;
         }
     }
 
@@ -174,7 +186,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
 
     private FragmentsHandler findFragmentHandler() {
         for (FragmentsHandler handler : fragmentHandlers) {
-            if (handler.canHandleFragment(context)) {
+            if (handler.canHandleFragment(contextReference.get())) {
                 return handler;
             }
         }
@@ -182,13 +194,16 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     }
 
     private void handleContent() {
+        if (dialog.isShowing()) {
+            return;
+        }
         FragmentsHandler fragmentHandler = findFragmentHandler();
         CharSequence content;
         if (fragmentHandler != null) {
-            content = fragmentHandler.handleFragment(context,
+            content = fragmentHandler.handleFragment(contextReference.get(),
                 shakerCallback != null ? shakerCallback.ignoreFragments() : null);
         } else {
-            content = context.getClass().getSimpleName();
+            content = contextReference.getClass().getSimpleName();
         }
         setContent(content);
         dialog.show();
@@ -218,7 +233,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     @Override
     public void onDismiss(DialogInterface dialog) {
         if (shakerCallback != null) {
-            shakerCallback.onDismiss(context, dialog);
+            shakerCallback.onDismiss(contextReference.get(), dialog);
         }
     }
 
@@ -226,10 +241,19 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private static final LifeCycleCallback LIFE_CYCLE_CALLBACK = new LifeCycleCallback();
     private static boolean isFirst = true;
 
+    @SuppressWarnings("unused")
     public static synchronized void init(@NonNull Application app, @Nullable ShakerCallback shakerCallback) {
         if (isFirst) {
             isFirst = false;
             setCallback(shakerCallback);
+            app.registerActivityLifecycleCallbacks(LIFE_CYCLE_CALLBACK);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static synchronized void init(@NonNull Application app) {
+        if (isFirst) {
+            isFirst = false;
             app.registerActivityLifecycleCallbacks(LIFE_CYCLE_CALLBACK);
         }
     }
@@ -241,7 +265,6 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
     private static class LifeCycleCallback implements Application.ActivityLifecycleCallbacks {
         @Override
         public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            Log.e(TAG, "onActivityCreated: " + activity.getClass().getName());
             SHAKER_HELPER.put(activity.getClass().getName(), ShakerHelper.instance(activity));
         }
 
@@ -283,7 +306,10 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
         @Override
         public void onActivityDestroyed(Activity activity) {
             String name = createKey(activity);
-            SHAKER_HELPER.remove(name);
+            Shaker shaker = SHAKER_HELPER.remove(name);
+            if (shaker != null) {
+                shaker.onDestroy();
+            }
         }
     }
 }

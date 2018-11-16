@@ -28,4 +28,7 @@ public class ShakerHelper {
 
     public static void init(@NonNull Application app, @Nullable ShakerCallback shakerCallback) {
     }
+
+    public static void init(@NonNull Application app) {
+    }
 }
