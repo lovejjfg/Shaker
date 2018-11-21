@@ -203,7 +203,7 @@ public class ShakerHelper implements SensorEventListener, DialogInterface.OnDism
             content = fragmentHandler.handleFragment(contextReference.get(),
                 shakerCallback != null ? shakerCallback.ignoreFragments() : null);
         } else {
-            content = contextReference.getClass().getSimpleName();
+            content = contextReference.get().getClass().getSimpleName();
         }
         setContent(content);
         dialog.show();
