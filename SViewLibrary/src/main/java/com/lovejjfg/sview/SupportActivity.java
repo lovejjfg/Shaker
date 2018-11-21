@@ -7,12 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-
 import com.lovejjfg.sview.utils.FragmentsUtil;
 import com.lovejjfg.sview.utils.KeyBoardUtil;
-
 import java.util.List;
-
 
 /**
  * Created by Joe on 2016/11/13.
@@ -24,7 +21,8 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     public FragmentsUtil fragmentsUtil;
 
     @Override
-    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos, SupportFragment... children) {
+    public void addToParent(int containerViewId, @NonNull SupportFragment parent, int pos,
+        SupportFragment... children) {
         fragmentsUtil.addToParent(containerViewId, parent, pos, children);
     }
 
@@ -35,8 +33,8 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         fragmentsUtil = new FragmentsUtil(getSupportFragmentManager());
+        super.onCreate(savedInstanceState);
     }
 
     public FragmentsUtil getFragmentsUtil() {
@@ -84,7 +82,6 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
         fragmentsUtil.replaceToShow(from, to);
     }
 
-
     @Override
     public void onBackPressed() {
         if (!finishSelf()) {
@@ -126,7 +123,6 @@ public abstract class SupportActivity extends AppCompatActivity implements ISupp
     public void closeKeyBoard() {
         KeyBoardUtil.closeKeyBoard(this);
     }
-
 
     @Override
     public boolean finishSelf() {
