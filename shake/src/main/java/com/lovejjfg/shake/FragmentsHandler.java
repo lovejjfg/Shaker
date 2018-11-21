@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface FragmentsHandler {
     String GLIDE_FRAGMENT = "SupportRequestManagerFragment";
+    String RXPERMISSION_FRAGMENT = "RxPermissionsFragment";
 
     boolean canHandleFragment(Activity context);
 

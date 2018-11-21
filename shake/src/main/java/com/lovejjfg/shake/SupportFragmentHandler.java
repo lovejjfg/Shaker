@@ -46,8 +46,13 @@ class SupportFragmentHandler implements FragmentsHandler {
         }
         ArrayList<Fragment> names;
         for (Fragment topFragment : topFragments) {
+            String fragmentName = topFragment.getClass().getName();
             //Glide ignore
-            if (topFragment.getClass().getName().contains(GLIDE_FRAGMENT)) {
+            if (fragmentName.contains(GLIDE_FRAGMENT)) {
+                continue;
+            }
+            //RxPermission ignore
+            if (fragmentName.contains(RXPERMISSION_FRAGMENT)) {
                 continue;
             }
             //add activity name first
